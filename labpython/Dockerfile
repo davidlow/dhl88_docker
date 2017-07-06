@@ -11,8 +11,7 @@ RUN apt-get update && \
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt && \
-    mkdir /code && \
-    export PYTHONPATH="${PYTHONPATH}:/code"
+    mkdir /code
 COPY mpl-test.py ./
 
 ## Replace 1000 with your user / group id

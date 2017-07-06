@@ -5,3 +5,4 @@ h5py
 pandas
 matplotlib
 pyqt5
+jsonpickle
