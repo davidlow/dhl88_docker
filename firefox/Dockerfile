@@ -50,15 +50,12 @@ RUN groupadd -r firefox \
     && chown -R firefox:firefox /home/firefox \
     && usermod -u 1000 firefox \
     && groupmod -g 1000 firefox \
-    && groupmod -g 92 audio
-
-RUN apt-get update \
-    && apt-get install -yq alsa-base alsa-utils
-
-RUN echo "options snd-hda-intel index=1,0" >> /etc/modprobe.d/snd-hda-intel.conf
+    && groupmod -g 92 audio \
+    && mkdir -p /run/user/${uid}
 
 USER firefox
 
 COPY .asoundrc /home/firefox/.asoundrc
+
 #ENTRYPOINT ["/usr/bin/firefox", "--new-window", "about:blank"]
 CMD ["bash"]
