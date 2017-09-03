@@ -48,8 +48,8 @@ RUN groupadd -r firefox \
     && useradd -r -g firefox -G audio,video firefox \
     && mkdir -p /home/firefox/Downloads \
     && chown -R firefox:firefox /home/firefox \
-    && usermod -u 1000 firefox \
-    && groupmod -g 1000 firefox \
+    && usermod -u 1001 firefox \
+    && groupmod -g 996 firefox \
     && groupmod -g 92 audio \
     && mkdir -p /run/user/${uid}
 
