@@ -6,7 +6,7 @@ docker run \
     -e uid=$(id -u) \
     -e gid=996 \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
-    -v /mnt/labshare:/labshare \
+    -v /home/david/Downloads/docker:/downloads \
     --device /dev/snd \
     -v /dev/shm:/dev/shm \
     -v /run/user/1001/pulse:/run/user/1001/pulse \

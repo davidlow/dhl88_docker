@@ -11,14 +11,24 @@ RUN \
         gstreamer1.0-libav \
         gstreamer1.0-plugins-good \
         pulseaudio \
+	alsa-base \
+	alsa-utils \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /home/firefox \
     && echo "firefox:x:${uid}:${gid}:firefox,,,:/home/firefox:/bin/bash" >> /etc/passwd \
     && echo "firefox:x:${uid}:" >> /etc/group \
-    #mkdir -p /etc/sudoers.d && \
-    #echo "firefox ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/firefox && \
-    #chmod 0440 /etc/sudoers.d/firefox && \
-    && chown ${uid}:${gid} -R /home/firefox
+    # mkdir -p /etc/sudoers.d && \
+    # echo "firefox ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/firefox && \
+    # chmod 0440 /etc/sudoers.d/firefox && \
+    && chown ${uid}:${gid} -R /home/firefox \
+    && groupadd -r firefox \
+    && useradd -r -g firefox -G audio,video firefox \
+    && mkdir -p /home/firefox/Downloads \
+    && chown -R firefox:firefox /home/firefox \
+    && usermod -u 1001 firefox \
+    && groupmod -g 996 firefox \
+    && groupmod -g 92 audio \
+    && mkdir -p /run/user/${uid}
 
 #RUN update-flashplugin-nonfree --install 
 
@@ -40,20 +50,12 @@ RUN  \
 #    unzip ublock_origin/addon-607454-latest.xpi -d ublock_origin/ \
 #    rm ublock_origin/addon-607454-latest.xpi \
 
-#USER firefox
-
-#CMD ["bash"]
-
-RUN groupadd -r firefox \
-    && useradd -r -g firefox -G audio,video firefox \
-    && mkdir -p /home/firefox/Downloads \
-    && chown -R firefox:firefox /home/firefox \
-    && usermod -u 1001 firefox \
-    && groupmod -g 996 firefox \
-    && groupmod -g 92 audio \
-    && mkdir -p /run/user/${uid}
-
 USER firefox
+WORKDIR /home/firefox
+RUN \
+	   wget https://addons.mozilla.org/firefox/downloads/latest/umatrix/addon-613250-latest.xpi \
+	&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi
+
 
 COPY .asoundrc /home/firefox/.asoundrc
 
