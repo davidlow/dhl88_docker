@@ -8,5 +8,5 @@ docker run \
     -v /mnt/labshare:/labshare \
     -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
     -v /home/david/cornell/nowack_lab/code:/code  \
-    --name labpython \
-    dhl88/labpython
+    --name labpython_qt \
+    dhl88/labpython_qt
