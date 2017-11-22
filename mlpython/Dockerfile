@@ -6,6 +6,7 @@ WORKDIR /usr/src/app
 RUN apt-get update && \
     apt-get install -y libtk8.6 && \
     apt-get install -y sudo && \
+    apt-get install -y python3-pyqt5 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
