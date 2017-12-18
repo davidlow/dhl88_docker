@@ -1,6 +1,7 @@
 numpy
 scipy
 ipython
+qtconsole
 h5py
 pandas
 matplotlib
