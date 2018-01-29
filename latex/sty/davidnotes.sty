@@ -1,0 +1,274 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  
+%%  Author:     David Low
+%%  File:       davidnotes.sty
+%%  Purpose:    Commands, formatting, packages for typsetting notes
+%%  Prerecs:    davidphys.sty
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{davidnotes}
+\RequirePackage{davidphys}
+
+\makeatletter
+
+% Index Commands %
+\let\@oldindex\index
+\renewcommand{\index}[1]      {\textbf{#1}\@oldindex{index}{#1|bfhyperlink}}
+\newcommand{\emptyindex}[1]   {\@oldindex{index}{#1|bfhyperlink}}
+\newcommand{\datesindex}[1]   {\@oldindex{dates}{#1|bfhyperlink}}
+\newcommand{\environindex}[1] {\@oldindex{environs}{#1|bfhyperlink}}
+\newcommand{\indexinit}       {\makeindex{index}
+                               \makeindex{dates}
+                               \makeindex{environs}
+                              }
+\newcommand{\indexdone}  {\printindex{dates}{Dates}
+                          \printindex{environs}
+                            {Definitions, Examples, Homework, Theorems} 
+                          \printindex{index}{Index}
+                          }
+
+% Theorem, Definition, Example Environment %
+% Boxed definitions, line examples, gray theorem %
+\newcounter{thm}[section]
+\renewcommand{\thethm}{\thesection.\arabic{thm}}
+\newcommand{\@untitledthm}{Untitled}
+
+\newcounter{def}[section]
+\renewcommand{\thedef}{\thesection.\arabic{def}}
+\newcommand{\@untitleddef}{Untitled}
+
+\newcounter{ex}[section]
+\renewcommand{\theex}{\thesection.\arabic{ex}}
+\newcommand{\@untitledex}{Untitled}
+
+\newcounter{hw}[section]
+\renewcommand{\thehw}{\thesection.\arabic{hw}}
+\newcommand{\@untitledhw}{Untitled}
+
+\newlength{\@tmplen}
+
+\definecolor{example-gray}  {gray}{0.975}
+\definecolor{light-blue}    {HTML}{00CCFF}
+\definecolor{light-green}   {HTML}{00FFCC}
+\definecolor{light-purple}  {HTML}{99CCFF}
+\definecolor{light-lav}     {HTML}{CCCCFF}
+\definecolor{lav}           {HTML}{FFCCFF}
+\definecolor{rose}          {HTML}{FF99CC}
+
+\definecolor{thmfill}       {HTML}{CCFFFF} % light-lav
+\definecolor{deffill}       {HTML}{FFCCFF} % lav
+\definecolor{exfill}        {HTML}{FFFFCC} % baby blue
+\definecolor{hwfill}        {HTML}{CCCCFF} % light-lav
+
+\newlength{\@thmbarwidth}
+\setlength{\@thmbarwidth}   {0pt}
+\newlength{\@thmwidth}      
+\setlength{\@thmwidth}      {0.95\hsize}
+\gdef \@thmbarcolor         {white}
+
+\newlength{\@defbarwidth}
+\setlength{\@defbarwidth}   {0pt}
+\newlength{\@defwidth}      
+\setlength{\@defwidth}      {0.95\hsize}
+\gdef \@defbarcolor         {black}
+\gdef \@defframecolor       {black}
+
+\newlength{\@exbarwidth}
+\setlength{\@exbarwidth}   {1.2pt}
+\newlength{\@exwidth}      
+\setlength{\@exwidth}      {0.95\hsize}
+\gdef \@exbarcolor         {black}
+
+\newlength{\@hwbarwidth}
+\setlength{\@hwbarwidth}   {1.2pt}
+\newlength{\@hwwidth}      
+\setlength{\@hwwidth}      {0.95\hsize}
+\gdef \@hwbarcolor         {white}
+
+\newenvironment{@theoremfill}
+{%
+    \def\FrameCommand
+    {%
+        {\color{\@thmbarcolor}\vrule width \@thmbarwidth}%
+         \hspace{0pt}%
+         \fboxsep=\FrameSep\colorbox{thmfill}%
+    }%
+    \MakeFramed{\hsize\@thmwidth \advance\hsize-\width\FrameRestore}%
+}
+{
+    \endMakeFramed
+}
+
+\newenvironment{@definitionboxed}
+{%
+    \def\FrameCommand{\OpenFBox\FrameRule\FrameRule}%
+    \def\FirstFrameCommand{\OpenFBox\FrameRule\z@}%
+    \def\MidFrameCommand{\OpenFBox\z@\z@}%
+    \def\LastFrameCommand{\OpenFBox\z@\FrameRule}%
+    \setlength{\@tmplen}{\FrameRule}%
+    \setlength{\FrameRule}{1pt}%
+    \MakeFramed{\hsize\@defwidth \advance\hsize-\width\FrameRestore}%
+}
+{
+    \endMakeFramed
+    \setlength{\FrameRule}{\@tmplen}
+}
+
+
+\newenvironment{@definitionfill}
+{%
+    \def\FrameCommand
+    {%
+        {\color{\@defbarcolor}\vrule width \@defbarwidth}%
+         \hspace{0pt}%
+         \fboxsep=\FrameSep\colorbox{deffill}%
+    }%
+    \MakeFramed{\hsize\@thmwidth \advance\hsize-\width\FrameRestore}%
+}
+{
+    \endMakeFramed
+}
+
+
+\newenvironment{@examplebar}
+{%
+    \def\FrameCommand
+    {%
+        {\color{\@exbarcolor}\vrule width \@exbarwidth}%
+         \hspace{0pt}%
+         \fboxsep=\FrameSep\colorbox{exfill}%
+    }%
+    \MakeFramed{\hsize\@exwidth \advance\hsize-\width\FrameRestore}%
+}
+{
+    \endMakeFramed
+}
+
+\newenvironment{@homeworkfill}
+{%
+    \def\FrameCommand
+    {%
+        {\color{\@hwbarcolor}\vrule width \@hwbarwidth}%
+         \hspace{0pt}%
+         \fboxsep=\FrameSep\colorbox{hwfill}%
+    }%
+    \MakeFramed{\hsize\@hwwidth \advance\hsize-\width\FrameRestore}%
+}
+{
+    \endMakeFramed
+}
+
+
+\newcommand{\@theoremopen}[1]
+{
+    \par\medskip\noindent\refstepcounter{thm}
+    %    \@oldindex{Theorem, #1 (\thethm)}{Theorem, #1 (\thethm)|bfhyperlink}
+    \environindex{THM#1@\textbf{THM}, #1}
+    \begin{@theoremfill}
+    \textbf{Theorem \thethm: #1}\par
+}
+\newcommand{\@theoremclose}
+{
+    \end{@theoremfill}
+}
+
+\newcommand{\@definitionopen}[1]
+{
+    \par\medskip\noindent\refstepcounter{def}
+    \environindex{DEF#1@\textbf{DEF}, #1}
+    \begin{@definitionfill}
+    \textbf{\textsc{Definition \thedef: #1}}\par
+}
+\newcommand{\@definitionclose}
+{
+    \end{@definitionfill}
+}
+
+\newcommand{\@exampleopen}[1]
+{
+    \par\medskip\noindent\refstepcounter{ex}
+    \environindex{EX#1@\textbf{EX}, #1}
+    \begin{@examplebar}
+    \textbf{\emph{Example \theex: #1}}\par
+}
+\newcommand{\@exampleclose}
+{
+    \end{@examplebar}
+}
+
+\newcommand{\@homeworkopen}[1]
+{
+    \par\medskip\noindent\refstepcounter{hw}
+    %    \@oldindex{Theorem, #1 (\thethm)}{Theorem, #1 (\thethm)|bfhyperlink}
+    \environindex{HW#1@\textbf{HW}, #1}
+    \begin{@homeworkfill}
+    \textbf{Homework Hints \thehw: #1}\par
+}
+\newcommand{\@homeworkclose}
+{
+    \end{@homeworkfill}
+}
+
+\newenvironment{theorem}[1][\@untitledthm]
+               {\@theoremopen{#1}}{\@theoremclose}
+\newenvironment{theoremcolor}[2][\@thmbarcolor]
+               {\@theoremcoloropen{#1}{#2}}{\@theoremcolorclose}
+\newenvironment{definition}[1][\@untitleddef]
+               {\@definitionopen{#1}}{\@definitionclose}
+\newenvironment{example}[1][\@untitledex]
+               {\@exampleopen{#1}}{\@exampleclose}
+\newenvironment{homework}[1][\@untitledex]
+               {\@homeworkopen{#1}}{\@homeworkclose}
+
+\makeatother
+
+%\chapterstyle{madsen}
+\renewcommand{\chaptername}{Lecture}
+
+%\usepackage{fourier} % or what ever
+\usepackage[scaled=.92]{helvet}%. Sans serif - Helvetica
+\usepackage{color,calc}
+\newsavebox{\ChpNumBox}
+\definecolor{ChapBlue}{rgb}{0.00,0.65,0.65}
+\makeatletter
+\newcommand
+*
+{\thickhrulefill}{%
+\leavevmode\leaders\hrule height 1\p@ \hfill \kern \z@}
+\newcommand
+*
+\BuildChpNum[2]{%
+    \begin{tabular}[t]{@{}c@{}}
+        \makebox[0pt][c]{#1\strut} \\[.5ex]
+        \colorbox{ChapBlue}{%
+            \rule[-10em]{0pt}{0pt}%
+            \rule{1ex}{0pt}\color{black}#2\strut
+        \rule{1ex}{0pt}}%
+\end{tabular}}
+\makechapterstyle{BlueBox}{%
+    \renewcommand{\chapnamefont}{\large\scshape}
+    \renewcommand{\chapnumfont}{\Huge\bfseries}
+    \renewcommand{\chaptitlefont}{\raggedright\Huge\bfseries}
+    \setlength{\beforechapskip}{20pt}
+    \setlength{\midchapskip}{26pt}
+    \setlength{\afterchapskip}{40pt}
+    \renewcommand{\printchaptername}{}
+    \renewcommand{\chapternamenum}{}
+    \renewcommand{\printchapternum}{%
+        \sbox{\ChpNumBox}{%
+            \BuildChpNum{\chapnamefont\@chapapp}%
+    {\chapnumfont\thechapter}}}
+    \renewcommand{\printchapternonum}{%
+        \sbox{\ChpNumBox}{%
+            \BuildChpNum{\chapnamefont\vphantom{\@chapapp}}%
+    {\chapnumfont\hphantom{\thechapter}}}}
+    \renewcommand{\afterchapternum}{}
+    \renewcommand{\printchaptertitle}[1]{%
+        \usebox{\ChpNumBox}\hfill
+        \parbox[t]{\hsize-\wd\ChpNumBox-1em}{%
+            \vspace{\midchapskip}%
+            \thickhrulefill\par
+    \chaptitlefont ##1\par}}%
+}
+\chapterstyle{BlueBox}
