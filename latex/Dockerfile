@@ -10,6 +10,7 @@ RUN \
 
 
 COPY ./sty/* /root/texmf/tex/latex/commonstuff/
+COPY ./scripts/* /usr/bin/
 
 #ENTRYPOINT ["/usr/bin/firefox", "--new-window", "about:blank"]
 CMD ["bash"]
