@@ -62,7 +62,9 @@ USER firefox
 WORKDIR /home/firefox
 RUN \
 	   wget https://addons.mozilla.org/firefox/downloads/latest/umatrix/addon-613250-latest.xpi \
-	&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi
+	&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi \
+    && wget https://addons.mozilla.org/firefox/downloads/file/855336/privacy_badger-2018.2.5-an+fx.xpi?src=dp-btn-primary
+#    && wget https://addons.mozilla.org/firefox/downloads/file/858213/ghostery_privacy_ad_blocker-8.0.7.0-an+fx.xpi?src=dp-btn-primary \
 
 
 COPY .asoundrc /home/firefox/.asoundrc
