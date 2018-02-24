@@ -4,6 +4,7 @@ ipython
 h5py
 pandas
 matplotlib
+seaborn
 pyqt5
 jsonpickle
 scikit-learn
