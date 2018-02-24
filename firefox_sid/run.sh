@@ -4,7 +4,7 @@ docker run \
     --privileged \
     -e DISPLAY=$DISPLAY  \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
-    -v /home/david/Downloads/docker:/downloads \
+    -v /home/david/Downloads:/downloads \
     --device /dev/snd \
     -v /dev/shm:/dev/shm \
     -v /run/user/$(id -u)/pulse:/run/user/$(id -u)/pulse \
