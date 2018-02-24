@@ -63,7 +63,7 @@ WORKDIR /home/firefox
 RUN \
 	   wget https://addons.mozilla.org/firefox/downloads/latest/umatrix/addon-613250-latest.xpi \
 	&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi
-
+	&& wget https://addons.mozilla.org/firefox/downloads/file/850412/ghostery-8.0.4.4-an+fx.xpi?src=dp-btn-primary
 
 COPY .asoundrc /home/firefox/.asoundrc
 
