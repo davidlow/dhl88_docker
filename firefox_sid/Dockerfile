@@ -1,16 +1,7 @@
-FROM debian:sid
-
-ARG uid=1000
-ARG gid=1000
-ARG audioid=92
-
-ENV uid=${uid}
-ENV gid=${gid}
-ENV audioid=${audioid}
+FROM dhl88/pulseaudio
 
 RUN \
-    echo "${uid}:${gid}:${audioid}" \ 
-    && echo "deb  http://deb.debian.org/debian sid main contrib non-free"> /etc/apt/sources.list \
+    echo "deb  http://deb.debian.org/debian sid main contrib non-free"> /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -yq \
         firefox \
@@ -19,24 +10,7 @@ RUN \
         # H.264 support for youtube (HTML5)
         gstreamer1.0-libav \
         gstreamer1.0-plugins-good \
-        pulseaudio \
-	alsa-utils \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /home/firefox \
-#    && echo "firefox:x:${uid}:${gid}:firefox,,,:/home/firefox:/bin/bash" >> /etc/passwd \
-#    && echo "firefox:x:${uid}:" >> /etc/group \
-    # mkdir -p /etc/sudoers.d && \
-    # echo "firefox ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/firefox && \
-    # chmod 0440 /etc/sudoers.d/firefox && \
-    && chown ${uid}:${gid} -R /home/firefox \
-    && groupadd -r firefox \
-    && useradd -r -g firefox -G audio,video firefox \
-    && mkdir -p /home/firefox/Downloads \
-    && chown -R firefox:firefox /home/firefox \
-    && usermod -u ${uid} firefox \
-    && groupmod -g ${gid} firefox \
-    && groupmod -g ${audioid} audio \
-    && mkdir -p /run/user/${uid}
 
 #RUN update-flashplugin-nonfree --install 
 
@@ -52,21 +26,14 @@ RUN  \
         flash-mozilla.so /usr/lib/flashplugin-nonfree/libflashplayer.so \
         50 
 
-#RUN \
-#    wget -P ublock_origin \
-#        https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi \
-#    unzip ublock_origin/addon-607454-latest.xpi -d ublock_origin/ \
-#    rm ublock_origin/addon-607454-latest.xpi \
-
-USER firefox
-WORKDIR /home/firefox
+USER user
+WORKDIR /home/user
 RUN \
 wget https://addons.mozilla.org/firefox/downloads/latest/umatrix/addon-613250-latest.xpi \
-&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi \
-&& wget https://addons.mozilla.org/firefox/downloads/file/850412/ghostery-8.0.4.4-an+fx.xpi?src=dp-btn-primary \
-&& wget https://addons.mozilla.org/firefox/downloads/file/855336/privacy_badger-2018.2.5-an+fx.xpi?src=dp-btn-primary
-
-COPY .asoundrc /home/firefox/.asoundrc
+&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi 
+#&& wget https://addons.mozilla.org/firefox/downloads/file/850412/ghostery-8.0.4.4-an+fx.xpi?src=dp-btn-primary \
+#&& wget https://addons.mozilla.org/firefox/downloads/file/855336/privacy_badger-2018.2.5-an+fx.xpi?src=dp-btn-primary
 
 #ENTRYPOINT ["/usr/bin/firefox", "--new-window", "about:blank"]
+
 CMD ["bash"]
