@@ -4,7 +4,7 @@ docker run \
     -d   \
     --privileged \
     -e DISPLAY=$DISPLAY  \
-    -v /home/david/cornell:/cornell \
+    -v /home/david/work:/work \
     --device /dev/snd \
     --name latex \
     dhl88/latex
