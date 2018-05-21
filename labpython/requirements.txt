@@ -8,3 +8,4 @@ matplotlib
 seaborn
 pyqt5
 jsonpickle
+astropy
