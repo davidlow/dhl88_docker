@@ -10,7 +10,7 @@ RUN \
         # H.264 support for youtube (HTML5)
         gstreamer1.0-libav \
         gstreamer1.0-plugins-good \
-    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/*
 
 #RUN update-flashplugin-nonfree --install 
 
