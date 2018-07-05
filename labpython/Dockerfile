@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 # Install this to avoid error on matplotlib.pyplot import
 RUN apt-get update && \
-    apt-get install -y libtk8.6 sudo imagemagick && \
+    apt-get install -y libtk8.6 sudo imagemagick gcc && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

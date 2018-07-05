@@ -9,3 +9,8 @@ seaborn
 pyqt5
 jsonpickle
 astropy
+xarray
+netCDF4
+h5netcdf
+cyordereddict
+statsmodels

@@ -10,3 +10,8 @@ jsonpickle
 scikit-learn
 pyqtgraph
 cvxopt
+xarray
+netCDF4
+h5netcdf
+cyordereddict
+statsmodels
