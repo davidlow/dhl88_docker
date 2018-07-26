@@ -12,5 +12,3 @@ astropy
 xarray
 netCDF4
 h5netcdf
-cyordereddict
-statsmodels
