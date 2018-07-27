@@ -15,7 +15,8 @@ RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir -r requirements2.txt && \
     mkdir /code
-COPY mpl-test.py ./
+#COPY mpl-test.py ./
+COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
 
 ## Replace 1000 with your user / group id
 #RUN export uid=1000 gid=1000 && \
