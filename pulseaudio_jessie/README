@@ -1,0 +1,14 @@
+su user
+bash
+
+speaker-test
+If no sound, 
+    pulseaudio --check
+    $?
+
+    If 1, pulseaudio is not working / not loaded
+    pulseaudio -D
+
+    check for sound again
+
+
