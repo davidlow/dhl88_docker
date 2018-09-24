@@ -9,22 +9,31 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt ./
-COPY requirements2.txt ./
 RUN pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir -r requirements2.txt && \
-    mkdir /code
-#COPY mpl-test.py ./
-COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
+    pip install --no-cache-dir \
+                numpy \
+                scipy \
+                ipython \
+                qtconsole \
+                h5py \
+                pandas \
+                matplotlib \
+                seaborn \
+                pyqt5 \
+                jsonpickle \
+                astropy \
+                xarray \
+                netCDF4 \
+                h5netcdf \
+                dask \
+                toolz \
+                pillow \
+                colorcet && \
+    pip install --no-cache-dir \
+                "holoviews[recommended]" \
+                bokeh \
+                colorcet 
 
-## Replace 1000 with your user / group id
-#RUN export uid=1000 gid=1000 && \
-#    mkdir -p /home/developer && \
-#    echo "developer:x:${uid}:${gid}:Developer,,,:/home/developer:/bin/bash" >> /etc/passwd && \
-#    echo "developer:x:${uid}:" >> /etc/group && \
-#    echo "developer ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/developer && \
-#    chmod 0440 /etc/sudoers.d/developer && \
-#    chown ${uid}:${gid} -R /home/developer
+COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
 
 CMD ["bash"]
