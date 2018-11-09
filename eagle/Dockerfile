@@ -1,5 +1,5 @@
 #FROM debian:stretch
-FROM ubuntu:latest
+FROM ubuntu:18.04
 
 
 RUN \
@@ -29,7 +29,7 @@ RUN \
     chmod 777 -R /eagle*
 
 RUN \ 
-    echo "export QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb && ./eagle*/eagle run" > eagle.sh && \
-    chmod 777 eagle.sh
+    echo "export QT_XKB_CONFIG_ROOT=/usr/share/X11/xkb && ./eagle*/eagle run" > eagle && \
+    chmod 777 eagle
 
 CMD ["bash"]
