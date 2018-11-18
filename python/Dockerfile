@@ -4,12 +4,28 @@ WORKDIR /usr/src/app
 
 # Install this to avoid error on matplotlib.pyplot import
 RUN apt-get update && \
-    apt-get install -y libtk8.6 sudo imagemagick gcc ffmpeg python3-dev &&\
-    apt-get install -y libhdf5-serial-dev netcdf-bin libnetcdf-dev && \
+    apt-get install -y \
+        libtk8.6 \
+        sudo \
+        python3-pyqt5 \
+        imagemagick \
+        gcc \
+        ffmpeg \
+        python3-dev \
+        python3-pip \
+        libxml2-dev \
+        libxslt1-dev \
+        zlib1g-dev \
+        g++ \
+        libhdf5-serial-dev \
+        netcdf-bin \
+        libnetcdf-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip && \
+# If pip cannot upgrade, try again
+RUN pip install --upgrade pip || \
+    pip install --upgrade pip && \
     pip install --no-cache-dir \
                 numpy \
                 scipy \
@@ -21,6 +37,8 @@ RUN pip install --upgrade pip && \
                 seaborn \
                 pyqt5 \
                 jsonpickle \
+                scikit-learn \
+                pyqtgraph \
                 astropy \
                 xarray \
                 netCDF4 \
@@ -30,10 +48,13 @@ RUN pip install --upgrade pip && \
                 pillow \
                 colorcet && \
     pip install --no-cache-dir \
+                statsmodels \
                 "holoviews[recommended]" \
                 bokeh \
-                colorcet 
-
+                cvxopt \
+                colorcet && \
+    pip install --no-cache-dir \
+                cvxpy
 COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
 
 CMD ["bash"]
