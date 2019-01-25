@@ -60,3 +60,12 @@ http://<container IP addr>:38888
 ```
 where ```<container IP addr>``` can be found by running
 ```docker inspect anaconda0 | grep IP```
+
+### Using
+Some tips for using jupyter lab
+
+#### Plotting with dark background
+```
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background', 'daviddarkcolors'])
+```
