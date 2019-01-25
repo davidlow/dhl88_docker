@@ -30,6 +30,7 @@ RUN pip install --upgrade pip && \
                 pillow \
                 colorcet && \
     pip install --no-cache-dir \
+                statsmodels \
                 "holoviews[recommended]" \
                 bokeh \
                 colorcet 

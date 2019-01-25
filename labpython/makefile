@@ -1,7 +1,7 @@
 all: labpython
 
-labpython: Dockerfile requirements.txt
+labpython: Dockerfile 
 	docker build . -t dhl88/labpython
 
-clean: Dockerfile requirements.txt
+clean: Dockerfile 
 	docker build . --no-cache -t dhl88/labpython
