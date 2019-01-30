@@ -8,11 +8,16 @@
 #
 # # All jupyter settings are stored in jupyterconfigs, which is on
 # # the host machine, so they are persistant
+
+DOCKERNAME=anaconda1
+PORT=38889
+
 docker run \
     --rm  \
     -it \
+    -d \
     --privileged \
-    -p 38888:38888 \
+    -p $PORT:$PORT \
     -e DISPLAY=$DISPLAY  \
     -e PYTHONPATH="/code:/labnotebook" \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
@@ -24,5 +29,10 @@ docker run \
     -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
     -v /home/david/cornell/nowack_lab/code:/code  \
     \
-    --name anaconda0 \
+    --name $DOCKERNAME \
     dhl88/anaconda
+docker cp ./sty/davidnotes.sty  $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
+docker cp ./sty/davidphys.sty   $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
+docker cp ./sty/tikzfeynman.sty $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
+docker exec -it $DOCKERNAME /bin/bash
+docker stop $DOCKERNAME

@@ -40,6 +40,21 @@ Add where python can look for modules
 -e PYTHONPATH="/code:/labnotebook" \
 ```
 
+## First time running
+To make latex work properly, you need to add a certain
+line to your `jupyter_notebook_config.py` file.  To 
+make one of these files, run
+```
+jupyter notebook --generate-config
+```
+The file will then be generated wherever you chose your
+`jupyterconfig` folder to be.
+
+Add the following line to your `jupyter_notebook_config.py` file:
+```
+c.LatexConfig.latex_command = 'pdflatex'
+```
+
 ## Running
 Once the docker container starts, run this command 
 to start the jupyter lab 
@@ -68,4 +83,19 @@ Some tips for using jupyter lab
 ```
 import matplotlib.pyplot as plt
 plt.style.use(['dark_background', 'daviddarkcolors'])
+```
+
+#### Latex
+David's latex homework template is:
+```
+\documentclass[10pt,twocolumn,aps,rmp,tightenlines]{revtex4-1}
+\RequirePackage{davidphys}
+
+\begin{document}
+\title{Course Name}
+\author{David Low / dhl88}
+\affiliation{\mydate\today}
+\maketitle
+
+\end{document}
 ```
