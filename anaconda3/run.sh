@@ -9,8 +9,8 @@
 # # All jupyter settings are stored in jupyterconfigs, which is on
 # # the host machine, so they are persistant
 
-DOCKERNAME=anaconda1
-PORT=38889
+DOCKERNAME=anaconda0
+PORT=38888
 
 docker run \
     --rm  \

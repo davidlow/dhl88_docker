@@ -36,6 +36,8 @@ RUN \
     pip install jupyterlab_latex && \
     jupyter labextension install @jupyterlab/latex && \
     jupyter labextension install @jupyterlab/statusbar && \
+    jupyter labextension install @jupyterlab/toc && \
+    jupyter labextension install @jupyterlab/celltags && \
     conda clean -y --all 
 
 COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
