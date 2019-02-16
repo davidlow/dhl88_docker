@@ -9,27 +9,14 @@ RUN \
     && apt-get install -yq \
         texlive-full \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /root/texmf/tex/latex/commonstuff/ &&\
+    && mkdir -p /root/texmf/tex/latex/commonstuff/ 
+RUN \
     conda update -y -n root conda && \
     conda install -y -c conda-forge \
                         jupyterlab \
-                        jsonpickle \
-                        h5netcdf \
-                        colorcet \
+                        ipympl \
+                        nb_conda_kernels \
                         && \
-    conda install -y -c anaconda \
-                        pyqtgraph \
-                        xarray \
-                        netcdf4 \
-                        pillow \
-                        && \
-    conda install -y -c ioam holoviews && \
-    conda install -c bokeh bokeh && \
-    conda install -y -c conda-forge cvxopt && \
-    conda install -y -c conda-forge lapack && \
-    conda install -y -c cvxgrp cvxpy && \
-    conda install -y -c conda-forge colorcet && \
-    conda install -c conda-forge ipympl && \
     conda install nodejs && \
     jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
     jupyter labextension install jupyter-matplotlib && \
@@ -39,6 +26,34 @@ RUN \
     jupyter labextension install @jupyterlab/toc && \
     jupyter labextension install @jupyterlab/celltags && \
     conda clean -y --all 
+RUN \
+    conda update -y -n root conda && \
+    conda install -y --override-channels \
+                     -c anaconda \
+                        pyqtgraph \
+                        xarray \
+                        netcdf4 \
+                        pillow \
+                        bokeh \
+                        && \
+    conda clean -y --all
+RUN \
+    conda update --all &&\
+    conda install -y \
+                    -c conda-forge \
+                        jsonpickle \
+                        h5netcdf \
+                        colorcet \
+                        cvxopt \
+                        lapack \
+                        && \
+    conda clean -y --all 
+RUN \
+    conda update --all &&\
+    conda install -y -c ioam holoviews && \
+    conda install -y -c bokeh bokeh && \
+    conda install -y -c cvxgrp cvxpy && \
+    conda clean -y --all
 
 COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
 
