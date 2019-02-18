@@ -1,0 +1,644 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  
+%%  Author:     David Low %%  File:       davidphys.sty
+%%  Purpose:    Commands, formatting, packages for typsetting physics
+%%  Prerecs:    none
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{davidphys}
+
+\gdef \PDFBORDER {0 0 0.1}
+
+%%--------------------------------------------------------------------------%%
+%%                              Formatting                                  %%
+%%--------------------------------------------------------------------------%%
+
+\usepackage{url}
+\usepackage[usenames,dvipsnames]{color}
+\definecolor{greenbookmarks}{rgb}{0,.5,0}
+\usepackage[colorlinks=false,
+            pdfborder={\PDFBORDER},
+            linktoc=page,
+	        linkcolor=red,
+		    filecolor=brown,
+		    citecolor=green
+            bookmarks=true,
+            unicode=false,
+            pdftoolbar=true,
+            pdfmenubar=true,
+            pdffitwindow=false,
+            pdfstartview={FitH},
+            pdfauthor={David Low},
+            pdfcreator={David Low}
+        ]{hyperref}
+
+
+%paragraph handeling
+\setlength{\parindent}{0.0cm}
+\setlength{\parskip}{0.2cm}
+
+\usepackage{enumerate}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{calligra}
+\usepackage[T1]{fontenc}
+
+\usepackage{wrapfig}
+\usepackage{booktabs}
+\usepackage{array}
+
+%\usepackage{multind}
+%\usepackage[xindy,toc]{glossaries}
+%\usepackage{makeidx}
+
+\usepackage{datetime}
+\newdateformat{mydate}{\THEDAY {} \monthname[\THEMONTH] \THEYEAR}
+
+\usepackage{calc} %arithmatic in setlength and other latex variables
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                  Math                                    %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{slashed}
+\usepackage{cancel}
+\usepackage{xfrac}
+\usepackage{mathtools}
+%\usepackage{bbold}
+
+%\usepackage[scr=boondoxo,bb=boondox]{mathalfa}
+\DeclareMathAlphabet    {\mathcur}  {U}     {eus}   {m}{n}
+%\DeclareMathAlphabet    {\mathsiv}  {OMS}   {cmsy}  {m}{n}
+
+\allowdisplaybreaks[1]
+\numberwithin{equation}{section}
+
+
+
+
+%Scienfific Notation
+\newcommand{\e} [1]{\ensuremath{\times 10^{#1}}}
+\newcommand{\me}[1]{\times 10^{#1}}
+
+%Basic Commands
+\newcommand{\expp} [1]{\exp\scurly{#1}}
+\newcommand{\expps}[1]{e^{#1}}
+\newcommand{\fracs}[2]{#1/#2}
+\newcommand{\re}   [1]{\mathbb{R}\mathrm{e}\p[b]{#1}}
+\newcommand{\im}   [1]{\mathbb{I}\mathrm{m}\p[b]{#1}}
+\newcommand{\units}[1]{\; \mathrm{#1}}
+\newcommand{\un}   [1]{\ensuremath{\units{#1}}}
+\newcommand{\vect} [1]{\boldsymbol{#1}}   %vectors
+\newcommand{\vecth}[1]{\boldsymbol{\hat{#1}}}
+\newcommand{\ve}   [1]{\vect{#1}}
+\newcommand{\veh}  [1]{\vecth{#1}}
+\newcommand{\code} [1]{\texttt{#1}}
+\newcommand{\til}  [1]{\widetilde{#1}}
+
+%dumb shortcuts
+\newcommand{\epln}  {\epsilon}
+\newcommand{\vepln} {\varepsilon}
+\newcommand{\ep}    {\vepln}
+\newcommand{\vep}   {\epln}
+\newcommand{\en}    {\mathcur{E}}
+\newcommand{\arr}   {\text{\calligra \Large \textit{r}}}
+\newcommand{\odd}   {\text{odd}}
+\newcommand{\even}  {\text{even}}
+\newcommand{\csch}{\mathrm{csch}}
+\newcommand{\sech}{\mathrm{sech}}
+\newcommand{\defeq}{\coloneqq}
+\newcommand{\eqdef}{\eqqcolon}
+\newcommand{\vdagger}{{\vphantom{\dagger}}}
+\newcommand{\og}    {\omega}
+\newcommand{\angst} {\text{\AA}}
+\newcommand{\angstrom} {\text{\AA}}
+
+
+%Derivatives
+%\newcommand{\pd}    [2]{\frac{\partial #1}{\partial #2}}    
+\newcommand{\pd}    [3][]{\frac{\partial^{#1} #2}{\partial {#3}^{#1}}} 
+\newcommand{\ppd}   [3][]{\sparen{\frac{\partial^{#1} #2}{\partial {#3}^{#1}}}}
+\newcommand{\pdc}   [3]{\left(\frac{\partial #1}{\partial #2}\right)_{#3}}    
+\newcommand{\pdf}   [3][]{\frac{\partial^{#1} #2}{\partial #3}}           
+\newcommand{\pdnc}  [4]{\left(\frac{\partial^{#3} #1}{\partial #2^#3}\right)_{#4}} 
+\newcommand{\pdm}   [3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}     
+%\newcommand{\dd}    [2]{\frac{d #1}{d #2}}    
+\newcommand{\dd}    [3][]{\frac{d^{#1} #2}{d {#3}^{#1}}} 
+\newcommand{\ddn}   [3]{\frac{d^{#3} #1}{d {#2}^{#3}}}    
+\newcommand{\pr}    [1]{\partial_{#1}}
+
+%Quantum
+\newcommand{\ket}       [1]{\left| #1 \right>}
+\newcommand{\bra}       [1]{\left< #1 \right|}
+\newcommand{\braket}    [2]{\left<#1\middle|#2\right>}
+\newcommand{\braave}    [1]{\left<#1\right>}
+\newcommand{\braaave}   [1]{\left<\middle<#1\middle>\right>}
+\newcommand{\ave}       [1]{\braave{#1}}
+\newcommand{\modsq}     [1]{\left| #1 \right|^2}
+%\newcommand{\pfrac}     [2]{\left(\frac{#1}{#2}\right)}
+\newcommand{\pfrac}     [3][P]{\p[#1]{\frac{#2}{#3}}}
+\newcommand{\operator}  [1]{\hat{#1}}
+\newcommand{\op}        [1]{\operator{#1}}
+\newcommand{\opd}       [1]{\operator{#1}^{\dagger}}
+\newcommand{\braopket}  [3]{\left<#1\middle|%
+                            \op{#2} \middle|#3\right>%
+                           }
+\newcommand{\braopopket}[4]{\left<#1\middle|%
+                            \op{#2}\op{#3} \middle|#4\right>%
+                           }
+\newcommand{\brablahket}[3]{\left<#1\middle| #2 \middle|#3\right>}
+\newcommand{\braxket}   [3]{\brablahket{#1}{#2}{#3}}
+\newcommand{\braxpket}  [4]{\left<#1\middle|%
+#2\middle( #3 \middle|#4\middle>\right)}
+\newcommand{\brapxket}  [4]{\left(\middle<#1%
+                            \middle| #2 \middle) #3 \middle|#4\right>}
+\newcommand{\brapxpket} [4] {\left(\middle<#1 \middle| #2%
+                            \middle) \middle(#3 \middle|#4\middle>\right)}
+
+\newcommand{\tr}{\mathrm{Tr}\;}
+%\newcommand{\ketbra}[2]{\left| #1 \middle> \middle< #2 \right|}
+\newcommand{\li}[2]{\mathrm{Li}_{#1}\p{#2}}
+\newcommand{\arccosh}{\mathrm{arccosh}}
+
+% parens, evals
+\newcommand{\smartparn}     [1]{\left( #1 \right)}
+\newcommand{\smartbrac}     [1]{\left[ #1 \right]}
+\newcommand{\smartcurl}     [1]{\left\{ #1 \right\} }
+\newcommand{\spmatrix}      [1]{\begin{pmatrix} #1 \end{pmatrix}}
+\newcommand{\sbmatrix}      [1]{\begin{bmatrix} #1 \end{bmatrix}}
+\newcommand{\smatrix}       [1]{\begin{matrix} #1 \end{matrix}}
+\newcommand{\smmatrix}       [1]{\begin{smallmatrix} #1 \end{smallmatrix}}
+\newcommand{\amatrix}       [1]{\begin{vmatrix} #1 \end{vmatrix}}
+%\newcommand{\pmatrix}      [1]{\begin{pmatrix} #1 \end{pmatrix}}
+
+\newcommand{\sparen}    [1]{\smartparn{#1}}
+\newcommand{\sbrack}    [1]{\smartbrac{#1}}
+\newcommand{\scurly}    [1]{\smartcurl{#1}}
+\newcommand{\sabs}      [1]{\left|#1 \right|}
+\newcommand{\comm}      [1]{\sbrack{#1}}
+\newcommand{\anticomm}  [1]{\scurly{#1}}
+\newcommand{\set}       [1]{\scurly{#1}}
+
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "l" column type
+
+\newcommand{\p}[2][P]
+{
+    \if#1P \sparen{#2\vphantom{\frac{1}{2}}} \fi
+    \if#1p \sparen{#2\vphantom{\frac{1}{2}}} \fi
+%    \if#1p \sparen{#2}                       \fi
+    \if#1B \sbrack{#2\vphantom{\frac{1}{2}}} \fi
+    \if#1b \sbrack{#2\vphantom{\frac{1}{2}}} \fi
+%    \if#1b \sbrack{#2}                       \fi
+    \if#1C \scurly{#2\vphantom{\frac{1}{2}}} \fi
+    \if#1c \scurly{#2\vphantom{\frac{1}{2}}} \fi
+%    \if#1c \scurly{#2}                       \fi
+    \if#1A \sabs{#2\vphantom{\frac{1}{2}}}   \fi
+    \if#1a \sabs{#2\vphantom{\frac{1}{2}}}   \fi
+%    \if#1a \sabs{#2}                         \fi
+    \if#1i \left<#2\right>                   \fi
+    \if#1I \left<#2\vphantom{\frac{1}{2}}\right>\fi
+}
+
+\newcommand{\evalat}    [1]{\right/_{\!\!\!\!#1}}           
+\newcommand{\evalatt}   [1]{\big/_{\!\!\!\!#1}}            
+\newcommand{\seval}     [2]{\left.\vphantom{\frac{1}{2}}#1 \evalat{#2}}
+\newcommand{\speval}    [2]{\left(#1 \middle)\evalat{#2}}
+\newcommand{\sbeval}    [2]{\left[#1 \middle]\evalat{#2}}
+
+\newcommand{\piecewise} [1]{ \begin{cases} #1 \end{cases} }
+
+\newcommand{\sign}[2][P] {\p[#1]{#2}}
+\newcommand{\argmin} {\operatorname*{arg\,min}}
+\newcommand{\argmax} {\operatorname*{arg\,max}}
+\newcommand{\Cov} {\operatorname*{Cov}}
+\newcommand{\Vov} {\operatorname*{Var}}
+\newcommand{\E} {\operatorname*{\mathbb{E}}}
+\newcommand{\bigo}[1] {\operatorname*{\mathcal{O}\p{#1}}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% quantum circuits %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{qcircuit}
+\newcommand{\Qcirc}[1]{
+    \begin{array}{c}
+        \Qcircuit{#1}
+    \end{array}
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%   Multiline parens  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% USAGE: 
+%   In the align environment, do 
+%   \multiline{<before & sign>} {<after & sign>}
+%             {<inside paren, 1st line>}
+%             {<inside paren, 2nd line>}...{<inside paren, nth line>}
+%   Alignment should be handled automagically
+
+\newcommand{\hph}[1]{\hphantom{{}#1{}}}
+
+\makeatletter
+
+\newcommand{\@MLpareninit}[3]
+{
+    \gdef \@MLmin {\ensuremath{\frac{1}{2}}}
+    \gdef \@MLhei {\ensuremath{\vphantom{{}#3{}\@MLmin}}}
+    \if#1p
+        \gdef \@MLleft    {\ensuremath{\left(}}
+        \gdef \@MLleftv   {\ensuremath{\left.}}
+        \gdef \@MLright   {\ensuremath{\right)}}
+        \gdef \@MLrightv  {\ensuremath{\right.}}
+    \fi
+    \if#1b
+        \gdef \@MLleft    {\ensuremath{\left[}}
+        \gdef \@MLleftv   {\ensuremath{\left.}}
+        \gdef \@MLright   {\ensuremath{\right]}}
+        \gdef \@MLrightv  {\ensuremath{\right.}}
+    \fi
+    \if#1c
+        \gdef \@MLleft    {\ensuremath{\left\{}}
+        \gdef \@MLleftv   {\ensuremath{\left.}}
+        \gdef \@MLright   {\ensuremath{\right\}}}
+        \gdef \@MLrightv  {\ensuremath{\right.}}
+    \fi
+    \if#1v
+        \gdef \@MLleft    {\ensuremath{}}
+        \gdef \@MLleftv   {\ensuremath{}}
+        \gdef \@MLright   {\ensuremath{}}
+        \gdef \@MLrightv  {\ensuremath{}}
+    \fi
+    \if#1s
+        \gdef \@MLleft    {\ensuremath{\left|}}
+        \gdef \@MLleftv   {\ensuremath{\left.}}
+        \gdef \@MLright   {\ensuremath{\right|}}
+        \gdef \@MLrightv  {\ensuremath{\right.}}
+    \fi
+    \if#1S
+        \gdef \@MLleft    {\ensuremath{}}
+        \gdef \@MLleftv   {\ensuremath{\quad}}
+        \gdef \@MLright   {\ensuremath{}}
+        \gdef \@MLrightv  {\ensuremath{}}
+    \fi 
+    \if#1a
+        \gdef \@MLleft    {\ensuremath{\left<}}
+        \gdef \@MLleftv   {\ensuremath{\left.}}
+        \gdef \@MLright   {\ensuremath{\right>}}
+        \gdef \@MLrightv  {\ensuremath{\right.}}
+    \fi
+    \gdef \@MLlen {\hphantom{\ensuremath{{{}#2{}\@MLleft\@MLhei\@MLrightv}}}}
+}
+
+\newcommand{\multiline}[4][p]
+{
+    \@MLpareninit{#1}{#3}{#4}
+    #2 & #3 \@MLleft\@MLhei #4 {}\@MLrightv\notag\\*
+    \@ifnextchar\bgroup{\@MLmultilinescan}{& \text{ multiline usage error!}\\}
+}
+
+\newcommand{\@MLmultilinescan}[1]
+{
+    & \@MLlen#1 {}
+    \@ifnextchar\bgroup{\notag\\*\@MLmultilinescan}{\@MLleftv\@MLhei \@MLright\notag}
+}
+
+\makeatother
+
+
+
+
+
+%%%%%%%%%%%%%
+%%  Index  %%
+%%%%%%%%%%%%%
+\newcommand{\bfhyperlink}[1]{\dotfill\textbf{\hyperpage{#1}}}
+%\newcommand{\indexinit}     {\makeindex{Equations}}
+%\newcommand{\indexend}      {\printindex{Equations}{Equations}}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%          Tikz            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+                  \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\newcommand*\circledm[1]{\circled{\(#1\)}}
+\newcommand{\convoluted}{\;\circledm{*}\;}
+
+%%%%%%%%%%%%%%%%%%%
+%% Colored Boxes %%
+%%%%%%%%%%%%%%%%%%%
+\newcommand{\boxedColor}[2]%
+{%
+    \textcolor{#1}%
+    {
+        \fbox{\normalcolor\ensuremath{\displaystyle#2}}%
+    }%
+}
+\renewcommand{\boxed}   [2][black]{\boxedColor{#1}{#2}}
+\newcommand{\boxedi}    [3][Unnamed Equation]{
+                            \boxed{#2}{#3}\index{Equations}{#1|bfhyperlink}}
+%%%%%%% END %%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ludwig Boxes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Ludwig Boxes are really really interesting
+% There are a few modifications that are extremely noteworthy
+
+%%%%%%%%%%%
+%% Basic %%
+%%%%%%%%%%%
+\gdef \ludwigcolor {black}
+\gdef \ludwigstyle {}
+\gdef \ludwigsep    {3.5pt}
+
+\newcommand{\OpenLudwigBoxThicknessColor}[4][\ludwigstyle]% thickness,color,beginning,equal sign
+{
+    \tikz[baseline=-3pt]%
+    {
+        \node[draw=none, inner sep=\ludwigsep] (1) at (0,0)%
+        {%
+            \ensuremath{\displaystyle#3}%
+        };
+        \node [anchor=west, draw=none, inner sep=\ludwigsep] (2) at (1.east)%
+        {%
+            \ensuremath{\displaystyle#4}%
+        };
+        \draw[draw=#2,#1]
+            (1.north east)--(1.north west);
+        \draw[draw=#2,#1]
+            (1.south east)--(1.south west);
+        \draw[draw=#2,#1]
+        (1.south west)--(1.north west);
+        \draw[draw=#2,#1]
+            (1.south east)--(2.south west);
+        \draw[draw=#2,#1]
+            (1.north east)--(2.north west);
+        \draw[draw=#2,#1]
+            (2.north west)--(2.north);
+        \draw[draw=#2,#1]
+             (2.south west)--(2.south);
+    }
+    \negthickspace
+    \negthickspace
+    \negthickspace
+    \negthickspace
+}
+
+\newcommand{\CloseLudwigBoxThicknessColor}[4][\ludwigstyle]% thickness,color, equal sign, end
+{
+    \tikz[baseline=-3pt]%
+    {%
+        \node[draw=none, inner sep=\ludwigsep] (1) at (0,0)%
+        {%
+            \ensuremath{\displaystyle#3}%
+        };
+        \node [anchor=west, draw=none, inner sep=\ludwigsep] (2) at (1.east)%
+        {%
+            \ensuremath{\displaystyle#4}%
+        };
+    \draw[draw=#2, #1]
+        (2.north east)--(2.north west);
+    \draw[draw=#2, #1]
+        (2.south east)--(2.south west);
+    \draw[draw=#2, #1]
+        (2.south east)--(2.north east);
+    \draw[draw=#2, #1]
+        (2.south west)--(1.south east);
+    \draw[draw=#2, #1]
+        (2.north west)--(1.north east);
+    \draw[draw=#2, #1]
+        (1.north east)--(1.north);
+    \draw[draw=#2, #1]
+        (1.south east)--(1.south);
+    }
+}
+\newcommand{\oLboxMEM}[3]%
+{
+    \gdef \ludwigcolor {#1}
+    \OpenLudwigBoxThicknessColor{\ludwigcolor}{#2}{#3}
+}
+\newcommand{\cLboxMEM}[2]%
+{
+    \CloseLudwigBoxThicknessColor[\ludwigstyle]{\ludwigcolor}{#1}{#2}
+}
+
+% <BASIC COMMANDS>
+\newcommand{\setlstyle}     [1]{\gdef \ludwigstyle {#1}}
+
+\newcommand{\oLbox}         [3][black]{\oLboxMEM{#1}{#2}{#3}}
+\newcommand{\cLbox}         [2]{\cLboxMEM{#1}{#2}}
+
+\newcommand{\phantomeq}     [1]{\ensuremath{\phantom{{}\mathbin{#1}{}}}}
+% </BASIC COMMANDS>
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Automatic Hyperrefs %%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Creates hyperref link between the two ludwig boxes in case you get lost
+% It is completely useless.  You will NEVER get lost.  It is however an
+% interesting application of bidirection links.
+
+\newcounter{links}
+
+\gdef \linkO   {LabelForOpenBoxes}
+\gdef \linkC   {LabelForCloseBoxes}
+
+\gdef \currentOpenLabel {}
+\gdef \currentCloseLabel {}
+
+
+\newcommand{\linksMakeNewLabel}%
+{
+    \refstepcounter{links}
+    \gdef \currentOpenLabel  {\linkO:\arabic{links}}
+    \gdef \currentCloseLabel {\linkC:\arabic{links}}
+}
+
+\newcommand{\LinkingNode}[3]%this.refname, this.nextref, this.caption
+{
+    \hypersetup{pdfborder={0 0 0}}
+    \hyperlink{#2}
+    {
+        \hypertarget{#1}{#3}
+    }
+    \hypersetup{pdfborder={\PDFBORDER}}
+}
+
+\newcommand{\biDirectionLinkOpen}     [1]%
+{
+    \linksMakeNewLabel
+    \LinkingNode{\currentOpenLabel}{\currentCloseLabel}{#1}
+}
+\newcommand{\biDirectionLinkClose}    [1]%
+{
+    \LinkingNode{\currentCloseLabel}{\currentOpenLabel}{#1}
+}
+
+
+% <USE ME>
+\newcommand{\oLboxH} [3][red]{ \biDirectionLinkOpen {\oLbox[#1]{#2}{#3}} }
+\newcommand{\cLboxH} [2]     { \biDirectionLinkClose{\cLbox{#1}{#2}}     }
+% </USE ME>
+
+
+%%%%%%%%%%%%%%%%%
+%% Comment Box %%
+%%%%%%%%%%%%%%%%%
+\usepackage{framed}
+\makeatletter
+\newlength{\@leftbarwidth}
+\setlength{\@leftbarwidth}{1.2pt}
+\gdef \@leftbarcolor {black}
+\gdef \@leftbarfill  {white}
+
+\definecolor{light-gray}{gray}{0.98}
+\gdef \@leftbarfill {light-gray}
+
+\newenvironment{barcomment}[1][0.9\hsize]
+{%
+    \def\FrameCommand
+    {%
+        {\color{\@leftbarcolor}\vrule width \@leftbarwidth}%
+        \hspace{0pt}%
+        \fboxsep=\FrameSep\colorbox{\@leftbarfill}%
+    }%
+    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% Problem Statement %
+%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+
+\newlength{\@pstatebarwidth}
+\setlength{\@pstatebarwidth}    {0pt}
+\newlength{\@pswidth}
+\setlength{\@pswidth}           {0.9\hsize}
+\definecolor{pstatefill}        {gray}{0.98}
+
+
+\newenvironment{@pstatefill}[1][0.98\hsize]
+{%
+    \def\FrameCommand
+    {%
+        {\color{white}\vrule width \@pstatebarwidth}%
+        \hspace{0pt}%
+        \fboxsep=\FrameSep\colorbox{pstatefill}%
+    }%
+    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+
+\newcommand{\@pstateopen}
+{
+    \noindent
+    \begin{@pstatefill} \textsl\bgroup
+}
+\newcommand{\@pstateclose}
+{
+    \egroup \end{@pstatefill}
+}
+
+\newenvironment{pstatement}{\@pstateopen}{\@pstateclose}
+
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%
+% TO DO Box         %
+%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+
+\newlength{\@todobarwidth}
+\setlength{\@todobarwidth}    {0pt}
+\newlength{\@tdwidth}
+\setlength{\@tdwidth}           {0.9\hsize}
+\definecolor{todofill}        {HTML}{FF99CC}
+
+
+\newenvironment{@todofill}[1][0.98\hsize]
+{%
+    \def\FrameCommand
+    {%
+        {\color{white}\vrule width \@todobarwidth}%
+        \hspace{0pt}%
+        \fboxsep=\FrameSep\colorbox{todofill}%
+    }%
+    \MakeFramed{\hsize#1\advance\hsize-\width\FrameRestore}%
+}
+{\endMakeFramed}
+
+\newcommand{\@todoopen}
+{
+    \noindent
+    \begin{@todofill} 
+}
+\newcommand{\@todoclose}
+{
+    \end{@todofill}
+}
+
+\newenvironment{todo}{\@todoopen}{\@todoclose}
+
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%
+%% Code Insertion %%
+%%%%%%%%%%%%%%%%%%%%
+
+% HELP: % \lstinputlisting{source.py}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+
+\usepackage{listings}
+\lstset{
+    backgroundcolor=\color{white},
+    basicstyle=\footnotesize\ttfamily,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=2,
+    numbersep=5pt,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{dkgreen},
+    frame=single,
+    keywordstyle=\color{blue},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    title=\lstname
+}
+\lstloadlanguages
+{
+    Matlab,
+    Python,
+    Mathematica,
+    C,
+    C++,
+}
