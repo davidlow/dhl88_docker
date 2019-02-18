@@ -59,7 +59,7 @@ c.LatexConfig.latex_command = 'pdflatex'
 Once the docker container starts, run this command 
 to start the jupyter lab 
 ```
-jupyter lab --port=38888 --no-browser --allow-root --ip=0.0.0.0
+jupyter lab --port=38888 --no-browser --allow-root --ip=0.0.0.0 &
 ```
 
 On a web browser on your host machine, go to
