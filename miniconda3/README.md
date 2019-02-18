@@ -1,6 +1,6 @@
-# Anaconda 3 docker container
+# Miniconda 3 docker container
 
-Run anaconda 3 inside a docker container that 
+Run Miniconda 3 inside a docker container that 
 can be accessed from the host or another docker 
 container running a browser.
 
@@ -98,4 +98,33 @@ David's latex homework template is:
 \maketitle
 
 \end{document}
+```
+
+#### virtualenv
+This docker comes with virtualenv setup and ready to go!
+The default one is named david
+
+To activate the virtualenv,
+```
+conda activate david
+```
+
+To create your own virtualenv,
+```
+conda create -n name
+```
+
+To export your environment:
+```
+conda env export > environment.yml
+```
+
+To list existing environments:
+```
+conda info --envs
+```
+
+To create environment from ```yml``` file:
+```
+conda env create -f environment.yml
 ```
