@@ -25,6 +25,7 @@ RUN \
     jupyter labextension install @jupyterlab/statusbar && \
     jupyter labextension install @jupyterlab/toc && \
     jupyter labextension install @jupyterlab/celltags && \
+    jupyter labextension install jupyterlab-drawio && \
     conda clean -y --all 
 RUN \
     conda update -y -n root conda && \
