@@ -1,8 +1,7 @@
 FROM continuumio/miniconda3
 
 # If pip cannot upgrade, try again
-#    conda install -y -c dsdale24 pyqt5 \
-#                        && \
+#    conda install -y -c dsdale24 pyqt5 \ #                        && \
 RUN \
     echo "deb  http://deb.debian.org/debian stretch main contrib non-free"> /etc/apt/sources.list \
     && apt-get update \
@@ -26,18 +25,19 @@ RUN \
     jupyter labextension install @jupyterlab/statusbar && \
     jupyter labextension install @jupyterlab/toc && \
     jupyter labextension install @jupyterlab/celltags && \
+    jupyter labextension install jupyterlab-drawio && \
     conda clean -y --all 
 
 SHELL ["/bin/bash", "-c"]
 RUN \
     conda update -y -n root conda && \
     conda update -y --all &&\
-    conda create -n david && \
+    conda create -n droot && \
     export PATH="/opt/conda/bin:$PATH" && \
     source "/opt/conda/bin/activate" && \
     echo $0 && \
     echo $SHELL && \
-    conda activate david && \
+    conda activate droot && \
     conda install -y -c conda-forge \
                         scipy \
                         matplotlib \
@@ -58,9 +58,34 @@ RUN \
                         jsonpickle \
                         h5netcdf \
                         && \
-    conda update -y --all && \                       
-    conda clean -y --all
+    conda install -y ipykernel && \
+    jupyter lab build && \
+    conda update -y --all && \
+    conda clean -y --all && \
+    python -m ipykernel install --user --name droot \
+                --display-name "david's root"
 
-COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
+ENV USERID 1000
+ENV GID 1000
+RUN \
+    apt-get update && \
+    apt-get install -yq sudo vim && \
+    mkdir /home/david && \
+    groupadd -g $GID david && \
+    useradd -d /home/david -s /bin/bash -g ${GID} -u ${USERID} david && \
+    echo 'david:david' | chpasswd && \
+    adduser david sudo && \
+    echo "david ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\ 
+    chown -R 1000:1000 /home/david/ && \
+    mkdir -p /home/david/texmf/tex/latex/commonstuff && \  
+    mkdir -p /home/david/.config/matplotlib/stylelib
+    
+#COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
+
+USER david
+
+RUN \
+    touch /home/david/.bashrc && \
+    conda init bash 
 
 CMD ["bash"]

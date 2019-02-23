@@ -11,6 +11,8 @@
 
 DOCKERNAME=miniconda0
 PORT=38888
+HOME=/home/david
+#HOME=/root
 
 docker run \
     --rm  \
@@ -28,11 +30,14 @@ docker run \
     -v /mnt/labshare:/labshare \
     -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
     -v /home/david/cornell/nowack_lab/code:/code  \
+    -v /home/david/library:/library\
     \
     --name $DOCKERNAME \
     dhl88/miniconda
-docker cp ./sty/davidnotes.sty  $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
-docker cp ./sty/davidphys.sty   $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
-docker cp ./sty/tikzfeynman.sty $DOCKERNAME:/root/texmf/tex/latex/commonstuff/
+docker cp ./sty/davidnotes.sty  $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
+docker cp ./sty/davidphys.sty   $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
+docker cp ./sty/tikzfeynman.sty $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
+docker cp daviddarkcolors.mplstyle $DOCKERNAME:$HOME/.config/matplotlib/stylelib/
+
 docker exec -it $DOCKERNAME /bin/bash
 docker stop $DOCKERNAME

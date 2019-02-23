@@ -128,3 +128,10 @@ To create environment from ```yml``` file:
 ```
 conda env create -f environment.yml
 ```
+
+To make the conda virtualenv show up in the list of 
+jupyter notebook kernels:
+```
+python -m ipykernel install --user --name david --display-name "david"
+```
+where david is the name of the virtualenv
