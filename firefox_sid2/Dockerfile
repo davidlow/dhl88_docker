@@ -29,7 +29,6 @@ RUN  \
 USER user
 WORKDIR /home/user
 RUN \
-wget https://addons.mozilla.org/firefox/downloads/latest/umatrix/addon-613250-latest.xpi \
-&& wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi 
+wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi 
 
 CMD ["bash"]
