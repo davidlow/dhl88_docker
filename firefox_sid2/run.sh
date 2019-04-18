@@ -6,6 +6,8 @@ docker run \
     -v /home/david/Downloads:/home/user/Downloads \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro  \
     -v /run/user/$(id -u)/pulse:/run/pulse:ro \
+    -v /home/david/library:/home/user/library \
+    -v /home/david/cornell/nowack_lab/labnotebook:/home/user/labnotebook \
     --name firefox-sid2 \
     dhl88/firefox-sid2
 
