@@ -26,7 +26,18 @@ RUN \
     jupyter labextension install @jupyterlab/toc && \
     jupyter labextension install @jupyterlab/celltags && \
     jupyter labextension install jupyterlab-drawio && \
+    pip install black && \
+    jupyter labextension install @ryantam626/jupyterlab_code_formatter && \
+    pip install jupyterlab_code_formatter && \
+    jupyter serverextension enable --py jupyterlab_code_formatter &&\
     conda clean -y --all 
+
+#conda install -c conda-forge jupyter_contrib_nbextensions && \
+RUN \
+    pip install jupyter_contrib_nbextensions && \
+    conda install -c conda-forge jupyter_nbextensions_configurator && \
+    jupyter contrib nbextension install --system 
+    
 
 SHELL ["/bin/bash", "-c"]
 RUN \
@@ -57,6 +68,9 @@ RUN \
                     -c conda-forge \
                         jsonpickle \
                         h5netcdf \
+                        h5py \
+                        dask \
+                        statsmodels \
                         && \
     conda install -y ipykernel && \
     jupyter lab build && \
