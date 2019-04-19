@@ -76,16 +76,8 @@ http://<container IP addr>:38888
 where ```<container IP addr>``` can be found by running
 ```docker inspect anaconda0 | grep IP```
 
-### Using
-Some tips for using jupyter lab
 
-#### Plotting with dark background
-```
-import matplotlib.pyplot as plt
-plt.style.use(['dark_background', 'daviddarkcolors'])
-```
-
-#### Latex
+## Latex
 David's latex homework template is:
 ```
 \documentclass[10pt,twocolumn,aps,rmp,tightenlines]{revtex4-1}
@@ -100,7 +92,7 @@ David's latex homework template is:
 \end{document}
 ```
 
-#### virtualenv
+## Virtualenv in conda in jupyterlab
 This docker comes with virtualenv setup and ready to go!
 The default one is named david
 
@@ -135,3 +127,36 @@ jupyter notebook kernels:
 python -m ipykernel install --user --name david --display-name "david"
 ```
 where david is the name of the virtualenv
+
+
+## Jupyter notebook tips
+Some tips for using jupyterlab
+
+### Plotting with dark background
+```
+import matplotlib.pyplot as plt
+plt.style.use(['dark_background', 'daviddarkcolors'])
+```
+
+### Workspaces
+Workspaces are accessed by manually entering a different URL:
+For instance: 
+```
+172.17.0.4:38888/lab/workspaces/vibrations
+```
+accesses the `vibrations` workspace.  Each workspace is independent.
+
+A list of all workspaces lives in your jupyterconfigs folder under
+```
+jupyterconfigs/lab/workspaces
+```
+and take the form:
+```
+labworkspacesvibrations-0bdf.jupyterlab-workspace
+```
+
+### nbextensions DOES NOT WORK WITH JUPYTERLAB
+Nbextension manager can be accessed through 
+```
+172.17.0.4:38888/nbextensions
+```

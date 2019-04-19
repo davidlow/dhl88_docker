@@ -1,7 +1,10 @@
 FROM continuumio/miniconda3
 
+
 # If pip cannot upgrade, try again
 #    conda install -y -c dsdale24 pyqt5 \ #                        && \
+
+# Install LaTeX
 RUN \
     echo "deb  http://deb.debian.org/debian stretch main contrib non-free"> /etc/apt/sources.list \
     && apt-get update \
@@ -9,36 +12,44 @@ RUN \
         texlive-full \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/texmf/tex/latex/commonstuff/ 
+
+# Install conda and conda extensions
 RUN \
+    apt-get update && \
+    apt-get install -yq gcc nodejs && \
+    rm -rf /var/lib/apt/lists/* && \
     conda update -y -n root conda && \
     conda update -y --all &&\
     conda install -y -c conda-forge \
                         jupyterlab \
                         ipympl \
                         nb_conda_kernels \
+                        jupyter_conda \
                         && \
-    conda install nodejs && \
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager && \
-    jupyter labextension install jupyter-matplotlib && \
-    pip install jupyterlab_latex && \
-    jupyter labextension install @jupyterlab/latex && \
-    jupyter labextension install @jupyterlab/statusbar && \
-    jupyter labextension install @jupyterlab/toc && \
-    jupyter labextension install @jupyterlab/celltags && \
-    jupyter labextension install jupyterlab-drawio && \
-    pip install black && \
-    jupyter labextension install @ryantam626/jupyterlab_code_formatter && \
+    conda install -y nodejs && \
+    pip install jupyterlab_latex black nbresuse && \
+    jupyter labextension install jupyterlab-drawio \
+                                 jupyter-matplotlib \
+                                 jupyterlab_bokeh  \
+                                 @jupyter-widgets/jupyterlab-manager \
+                                 @jupyterlab/latex \
+                                 @jupyterlab/statusbar \
+                                 @jupyterlab/toc \
+                                 @jupyterlab/celltags \
+                                 @ryantam626/jupyterlab_code_formatter \
+                                 jupyterlab_filetree \
+                                 jupyterlab-topbar-extension  \
+                                 jupyterlab-system-monitor  \
+                                 jupyterlab-topbar-text \
+                                 @lckr/jupyterlab_variableinspector \
+                                 jupyterlab_vim \
+                                 jupyterlab_toastify \
+                                 jupyterlab_conda && \
     pip install jupyterlab_code_formatter && \
-    jupyter serverextension enable --py jupyterlab_code_formatter &&\
+    jupyter serverextension enable --py jupyterlab_code_formatter --system &&\
     conda clean -y --all 
 
-#conda install -c conda-forge jupyter_contrib_nbextensions && \
-RUN \
-    pip install jupyter_contrib_nbextensions && \
-    conda install -c conda-forge jupyter_nbextensions_configurator && \
-    jupyter contrib nbextension install --system 
-    
-
+# Use conda environment
 SHELL ["/bin/bash", "-c"]
 RUN \
     conda update -y -n root conda && \
@@ -76,30 +87,33 @@ RUN \
     jupyter lab build && \
     conda update -y --all && \
     conda clean -y --all && \
-    python -m ipykernel install --user --name droot \
-                --display-name "david's root"
+    python -m ipykernel install --user --name root \
+                --display-name "root"
 
 ENV USERID 1000
 ENV GID 1000
+ENV USERNAME david
+
+# Make user instead of root so library works better
 RUN \
     apt-get update && \
     apt-get install -yq sudo vim && \
-    mkdir /home/david && \
-    groupadd -g $GID david && \
-    useradd -d /home/david -s /bin/bash -g ${GID} -u ${USERID} david && \
-    echo 'david:david' | chpasswd && \
-    adduser david sudo && \
-    echo "david ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\ 
-    chown -R 1000:1000 /home/david/ && \
-    mkdir -p /home/david/texmf/tex/latex/commonstuff && \  
-    mkdir -p /home/david/.config/matplotlib/stylelib
+    mkdir /home/${USERNAME} && \
+    groupadd -g $GID ${USERNAME} && \
+    useradd -d /home/${USERNAME} -s /bin/bash -g ${GID} -u ${USERID} ${USERNAME} && \
+    echo "${USERNAME}:${USERNAME}" | chpasswd && \
+    adduser ${USERNAME} sudo && \
+    echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
+    chown -R 1000:1000 /home/${USERNAME}/ && \
+    mkdir -p /home/${USERNAME}/texmf/tex/latex/commonstuff && \
+    mkdir -p /home/${USERNAME}/.config/matplotlib/stylelib && \
+    chmod 777 -R /opt/conda/share && \
+    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.config/
     
-#COPY daviddarkcolors.mplstyle /root/.config/matplotlib/stylelib/
-
 USER david
 
 RUN \
-    touch /home/david/.bashrc && \
+    touch /home/${USERNAME}/.bashrc && \
     conda init bash 
 
 CMD ["bash"]

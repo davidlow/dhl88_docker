@@ -9,8 +9,8 @@
 # # All jupyter settings are stored in jupyterconfigs, which is on
 # # the host machine, so they are persistant
 
-DOCKERNAME=miniconda0
-PORT=38888
+DOCKERNAME=miniconda1
+PORT=3888
 HOME=/home/david
 #HOME=/root
 
