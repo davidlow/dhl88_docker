@@ -90,25 +90,27 @@ RUN \
     python -m ipykernel install --user --name root \
                 --display-name "root"
 
-ENV USERID 1000
-ENV GID 1000
-ENV USERNAME david
+ARG USERID=1000
+ARG GID=1000
+ARG USERNAME=david
 
 # Make user instead of root so library works better
 RUN \
     apt-get update && \
+    echo ${USERID} ${GID} ${USERNAME} && \
     apt-get install -yq sudo vim && \
     mkdir /home/${USERNAME} && \
-    groupadd -g $GID ${USERNAME} && \
+    groupadd -g $GID ${USERNAME} || echo "groupd add failed" && \
     useradd -d /home/${USERNAME} -s /bin/bash -g ${GID} -u ${USERID} ${USERNAME} && \
     echo "${USERNAME}:${USERNAME}" | chpasswd && \
     adduser ${USERNAME} sudo && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && \
-    chown -R 1000:1000 /home/${USERNAME}/ && \
+    chown -R ${USERID}:${GID} /home/${USERNAME}/ && \
     mkdir -p /home/${USERNAME}/texmf/tex/latex/commonstuff && \
     mkdir -p /home/${USERNAME}/.config/matplotlib/stylelib && \
     chmod 777 -R /opt/conda/share && \
-    chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.config/
+    find /opt/conda -type d -exec chmod 777 {} + && \
+    chown -R ${USERID}:${GID} /home/${USERNAME}/.config/
     
 USER david
 
