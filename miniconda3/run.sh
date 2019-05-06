@@ -9,10 +9,16 @@
 # # All jupyter settings are stored in jupyterconfigs, which is on
 # # the host machine, so they are persistant
 
-DOCKERNAME=miniconda1
-PORT=3888
-HOME=/home/david
-#HOME=/root
+DOCKERNAME=miniconda_${USER}_0
+DOCKERCONTAINER=dhl88/miniconda_${USER}
+PORT=$((38888+$(id -u)))
+DOCKERHOME=/home/${USER} #location in the container of the home folder
+
+# Change these
+JUPYTERCONFIG=/home/david/cornell/nowack_lab/labnotebook/jupyter
+
+echo "jupyter lab --port=${PORT} --no-browser --ip=0.0.0.0 &" > startjupyter
+chmod 777 startjupyter
 
 docker run \
     --rm  \
@@ -24,7 +30,7 @@ docker run \
     -e PYTHONPATH="/code:/labnotebook" \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
     \
-    -v /home/david/cornell/nowack_lab/labnotebook/jupyter:/jupyterconfigs \
+    -v ${JUPYTERCONFIG}:/jupyterconfigs \
     -e JUPYTER_CONFIG_DIR="/jupyterconfigs" \
     \
     -v /mnt/labshare:/labshare \
@@ -33,11 +39,14 @@ docker run \
     -v /home/david/library:/library\
     \
     --name $DOCKERNAME \
-    dhl88/miniconda
-docker cp ./sty/davidnotes.sty  $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
-docker cp ./sty/davidphys.sty   $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
-docker cp ./sty/tikzfeynman.sty $DOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
-docker cp daviddarkcolors.mplstyle $DOCKERNAME:$HOME/.config/matplotlib/stylelib/
+    $DOCKERCONTAINER
+
+docker cp ./sty/davidnotes.sty  $DOCKERNAME:$DOCKERHOME/texmf/tex/latex/commonstuff/
+docker cp ./sty/davidphys.sty   $DOCKERNAME:$DOCKERHOME/texmf/tex/latex/commonstuff/
+docker cp ./sty/tikzfeynman.sty $DOCKERNAME:$DOCKERHOME/texmf/tex/latex/commonstuff/
+docker cp daviddarkcolors.mplstyle $DOCKERNAME:$DOCKERHOME/.config/matplotlib/stylelib/
+
+docker cp startjupyter          $DOCKERNAME:/usr/bin/
 
 docker exec -it $DOCKERNAME /bin/bash
 docker stop $DOCKERNAME

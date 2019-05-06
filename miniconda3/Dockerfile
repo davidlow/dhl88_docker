@@ -42,7 +42,6 @@ RUN \
                                  jupyterlab-system-monitor  \
                                  jupyterlab-topbar-text \
                                  @lckr/jupyterlab_variableinspector \
-                                 jupyterlab_vim \
                                  jupyterlab_toastify \
                                  jupyterlab_conda && \
     pip install jupyterlab_code_formatter && \
@@ -57,8 +56,6 @@ RUN \
     conda create -n droot && \
     export PATH="/opt/conda/bin:$PATH" && \
     source "/opt/conda/bin/activate" && \
-    echo $0 && \
-    echo $SHELL && \
     conda activate droot && \
     conda install -y -c conda-forge \
                         scipy \
@@ -87,8 +84,8 @@ RUN \
     jupyter lab build && \
     conda update -y --all && \
     conda clean -y --all && \
-    python -m ipykernel install --user --name root \
-                --display-name "root"
+    python -m ipykernel install --user --name droot \
+                --display-name "david_root"
 
 ARG USERID=1000
 ARG GID=1000
