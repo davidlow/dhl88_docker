@@ -71,6 +71,8 @@ RUN \
                         netcdf4 \
                         pillow \
                         bokeh \
+                        networkx \
+                        graphviz \
                         && \
     conda install -y \
                     -c conda-forge \
@@ -80,6 +82,7 @@ RUN \
                         dask \
                         statsmodels \
                         && \
+    conda install -y -c plotly plotly && \
     conda install -y ipykernel && \
     jupyter lab build && \
     conda update -y --all && \

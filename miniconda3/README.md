@@ -59,19 +59,24 @@ c.LatexConfig.latex_command = 'pdflatex'
 Once the docker container starts, run this command 
 to start the jupyter lab 
 ```
-jupyter lab --port=38888 --no-browser --allow-root --ip=0.0.0.0 &
+startjupyter
 ```
+This is a script that will run a command like:
+```
+jupyter lab --port=<port> --no-browser --allow-root --ip=0.0.0.0 &
+```
+where `<port>` is a 38888 + `id -u` on the host machine.
 
 On a web browser on your host machine, go to
 ```
-http://localhost:38888
+http://localhost:<port>
 ```
 to find the jupyter lab interface.  Enter the token that is outputted
 by the ```jupyter lab``` command.
 
 On a web browser on a docker container, go to
 ```
-http://<container IP addr>:38888
+http://<container IP addr>:<port>
 ```
 where ```<container IP addr>``` can be found by running
 ```docker inspect anaconda0 | grep IP```
