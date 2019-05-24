@@ -26,6 +26,7 @@ docker run \
     -d \
     --privileged \
     -p $PORT:$PORT \
+    -p 8787:8787 \
     -e DISPLAY=$DISPLAY  \
     -e PYTHONPATH="/code:/labnotebook" \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
