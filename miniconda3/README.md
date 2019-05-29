@@ -114,6 +114,7 @@ conda create -n name
 To copy an existing environment,
 ```
 conda create --name NEWNAME --clone EXISTING_ENV
+```
 
 To export your environment:
 ```
