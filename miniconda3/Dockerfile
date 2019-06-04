@@ -43,6 +43,7 @@ RUN \
                                  jupyterlab-topbar-text \
                                  @lckr/jupyterlab_variableinspector \
                                  jupyterlab_toastify \
+                                 @pyviz/jupyterlab_pyviz \
                                  jupyterlab_conda && \
     pip install jupyterlab_code_formatter && \
     jupyter serverextension enable --py jupyterlab_code_formatter --system &&\
@@ -83,6 +84,7 @@ RUN \
                         statsmodels \
                         && \
     conda install -y -c plotly plotly && \
+    conda install -c pyviz holoviews \
     conda install -y ipykernel && \
     jupyter lab build && \
     conda update -y --all && \

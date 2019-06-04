@@ -116,19 +116,9 @@ To copy an existing environment,
 conda create --name NEWNAME --clone EXISTING_ENV
 ```
 
-To export your environment:
-```
-conda env export > environment.yml
-```
-
 To list existing environments:
 ```
 conda info --envs
-```
-
-To create environment from ```yml``` file:
-```
-conda env create -f environment.yml
 ```
 
 To make the conda virtualenv show up in the list of 
@@ -137,6 +127,55 @@ jupyter notebook kernels:
 python -m ipykernel install --user --name david --display-name "david"
 ```
 where david is the name of the virtualenv
+
+### Environment files
+
+To create environment from ```yml``` file:
+```
+conda env create -f environment.yml
+```
+
+To export your environment:
+```
+conda env export > environment.yml
+```
+
+To export your environment for cross platform, 
+```
+conda env export --no-builds > environment.yml
+```
+
+Sometimes, a environment file will not build correctly.  I got an error 
+like 
+```
+Collecting package metadata: done
+Solving environment: failed
+
+ResolvePackageNotFound:
+  - openblas==0.3.6=h6e990d7_2
+```
+or 
+```
+Collecting package metadata: done
+Solving environment: failed
+
+UnsatisfiableError: The following specifications were found to be in conflict:
+  - liblapack==3.8.0=10_openblas -> libblas==3.8.0=10_openblas -> openblas[version='>=0.3.6,<0.3.7.0a0'] -> libopenblas==0.3.6=h6e990d7_3
+  - libopenblas==0.3.6=h6e990d7_3 -> openblas==0.3.6=3
+Use "conda search <package> --info" to see the dependencies for each package.
+
+```
+
+To fix these, copy your original environment file and edit it.  You will have lines like 
+```
+  - openblas=0.3.6=h6e990d7_2
+```
+Replace these lines with lines like
+```
+  - openblas=0.3.6
+```
+This removes the build specifications.  If you still had access to the other 
+conda environment, you could export with the `--no-builds` option.
 
 
 ## Jupyter notebook tips
