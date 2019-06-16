@@ -110,6 +110,7 @@ RUN \
     chown -R ${USERID}:${GID} /home/${USERNAME}/ && \
     mkdir -p /home/${USERNAME}/texmf/tex/latex/commonstuff && \
     mkdir -p /home/${USERNAME}/.config/matplotlib/stylelib && \
+    chown -R ${USERNAME}:${USERNAME} /opt/conda/share && \
     chmod 777 -R /opt/conda/share && \
     find /opt/conda -type d -exec chmod 777 {} + && \
     chown -R ${USERID}:${GID} /home/${USERNAME}/.config/
