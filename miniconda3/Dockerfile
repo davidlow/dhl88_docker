@@ -112,7 +112,7 @@ RUN \
     find /opt/conda -type d -exec chmod 777 {} + && \
     chown -R ${USERID}:${GID} /home/${USERNAME}/.config/
     
-USER david
+USER ${USERNAME}
 
 RUN \
     touch /home/${USERNAME}/.bashrc && \

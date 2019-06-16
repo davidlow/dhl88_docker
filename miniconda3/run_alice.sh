@@ -10,13 +10,16 @@
 # # the host machine, so they are persistant
 
 # Parameters to change
-JUPYTERCONFIGDIR=/home/david/jupyter
+JUPYTERCONFIGDIR=/home/alice/jupyter
 #JUPYTERCONFIGDIR=home/home/david/cornell/nowack_lab/labnotebook/jupyter
 
 DOCKERNAME=dhl88/miniconda_${USER}
+#DOCKERNAME=dhl88/miniconda_alice
 THISDOCKERNAME=miniconda_${USER}_0
+#THISDOCKERNAME=miniconda0
 PORT=$((38888 + $(id -u)))
-HOME=/home/${USER}
+#PORT=38888
+#HOME=/home/${USER}
 
 echo "jupyter lab --port=${PORT} --no-browser --ip=0.0.0.0 &" > startjupyter
 chmod 777 startjupyter
@@ -34,13 +37,11 @@ docker run \
     -v ${JUPYTERCONFIGDIR}:/jupyterconfigs \
     -e JUPYTER_CONFIG_DIR="/jupyterconfigs" \
     \
-    -v /mnt/labshare:/labshare \
-    -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
-    -v /home/david/cornell/nowack_lab/code:/code  \
-    -v /home/david/library:/library\
+    -v /home/alice/data:/data \
     \
     --name $THISDOCKERNAME \
     $DOCKERNAME
+
 docker cp ./sty/davidnotes.sty  \
 	$THISDOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
 docker cp ./sty/davidphys.sty   \
@@ -50,8 +51,8 @@ docker cp ./sty/tikzfeynman.sty \
 docker cp daviddarkcolors.mplstyle \
 	$THISDOCKERNAME:$HOME/.config/matplotlib/stylelib/
 
-docker cp startjupyter $DOCKERNAME:/usr/bin/
+docker cp startjupyter $THISDOCKERNAME:/usr/bin/
 
 
-docker exec -it $DOCKERNAME /bin/bash
-docker stop $DOCKERNAME
+docker exec -it $THISDOCKERNAME /bin/bash
+docker stop $THISDOCKERNAME
