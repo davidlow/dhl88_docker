@@ -42,8 +42,8 @@ RUN \
                                  jupyterlab-system-monitor  \
                                  jupyterlab-topbar-text \
                                  @lckr/jupyterlab_variableinspector \
-                                 jupyterlab_vim \
                                  jupyterlab_toastify \
+                                 @pyviz/jupyterlab_pyviz \
                                  jupyterlab_conda && \
     pip install jupyterlab_code_formatter && \
     jupyter serverextension enable --py jupyterlab_code_formatter --system &&\
@@ -57,8 +57,6 @@ RUN \
     conda create -n droot && \
     export PATH="/opt/conda/bin:$PATH" && \
     source "/opt/conda/bin/activate" && \
-    echo $0 && \
-    echo $SHELL && \
     conda activate droot && \
     conda install -y -c conda-forge \
                         scipy \
@@ -74,6 +72,8 @@ RUN \
                         netcdf4 \
                         pillow \
                         bokeh \
+                        networkx \
+                        graphviz \
                         && \
     conda install -y \
                     -c conda-forge \
@@ -83,12 +83,14 @@ RUN \
                         dask \
                         statsmodels \
                         && \
+    conda install -y -c plotly plotly && \
+    conda install -c pyviz holoviews \
     conda install -y ipykernel && \
     jupyter lab build && \
     conda update -y --all && \
     conda clean -y --all && \
-    python -m ipykernel install --user --name root \
-                --display-name "root"
+    python -m ipykernel install --user --name droot \
+                --display-name "david_root"
 
 ARG USERID=1000
 ARG GID=1000
@@ -108,6 +110,7 @@ RUN \
     chown -R ${USERID}:${GID} /home/${USERNAME}/ && \
     mkdir -p /home/${USERNAME}/texmf/tex/latex/commonstuff && \
     mkdir -p /home/${USERNAME}/.config/matplotlib/stylelib && \
+    chown -R ${USERNAME}:${USERNAME} /opt/conda/share && \
     chmod 777 -R /opt/conda/share && \
     find /opt/conda -type d -exec chmod 777 {} + && \
     chown -R ${USERID}:${GID} /home/${USERNAME}/.config/

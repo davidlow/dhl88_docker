@@ -27,11 +27,11 @@ docker run \
     -d \
     --privileged \
     -p $PORT:$PORT \
+    -p 8787:8787 \
     -e DISPLAY=$DISPLAY  \
     -e PYTHONPATH="/code:/labnotebook" \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0  \
-    \
-    -v ${JUPYTERCONFIGDIR}:/jupyterconfigs \
+    -v ${JUPYTERCONFIG}:/jupyterconfigs \
     -e JUPYTER_CONFIG_DIR="/jupyterconfigs" \
     \
     -v /mnt/labshare:/labshare \
@@ -41,6 +41,7 @@ docker run \
     \
     --name $THISDOCKERNAME \
     $DOCKERNAME
+
 docker cp ./sty/davidnotes.sty  \
 	$THISDOCKERNAME:$HOME/texmf/tex/latex/commonstuff/
 docker cp ./sty/davidphys.sty   \
@@ -51,7 +52,6 @@ docker cp daviddarkcolors.mplstyle \
 	$THISDOCKERNAME:$HOME/.config/matplotlib/stylelib/
 
 docker cp startjupyter $DOCKERNAME:/usr/bin/
-
 
 docker exec -it $DOCKERNAME /bin/bash
 docker stop $DOCKERNAME

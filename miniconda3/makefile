@@ -1,7 +1,7 @@
 all: miniconda
 	
 miniconda_orig: Dockerfile 
-	docker build . -t dhl88/miniconda 
+	docker build . -t dhl88/miniconda_${USER}
 					  
 miniconda: Dockerfile 
 	docker build . -t dhl88/miniconda_${USER} \
