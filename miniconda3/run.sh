@@ -39,6 +39,7 @@ docker run \
     -v /home/david/cornell/nowack_lab/code:/code  \
     -v /home/david/library:/library\
     \
+    -m 20g\
     --name $DOCKERNAME \
     $DOCKERCONTAINER
 
