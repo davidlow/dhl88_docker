@@ -20,10 +20,37 @@ To start the docker container,
 bash run.sh
 ```
 
-Once inside, run 
+To start the nomachine server, run 
 ```
 ./nxserver.sh &
 ```
+
+Once the nomachine server starts, log in from some computer with nomachine
+to activate the xserver (FIXME).
+
+We now want to turn on x11vnc server so we can vnc into the existing 
+x11 display.  First, find the display ID number by 
+```
+ps aux | grep xfce4-session
+```
+Take that number (like 143), and
+```
+cat /proc/143/environ | tr '\0' '\n' | grep DISPLAY
+```
+to find the display ID number.
+
+Then, activate x11vnc with 
+```
+x11vnc -nap -wait 50 -noxdamage -display :1001 -forever -rfbport 5980 &
+```
+where 5980 is the port to connect onto locally.  This must be done as the
+user that logged into the nomachine (david)
+
+To connect locally, 
+```
+vncviewer 172.17.0.6::5980
+```
+where `172.17.0.6` is the IP address of the nomachine docker image
 
 ### Customizing
 You will need to edit run.sh in your favorite text editor.
