@@ -10,63 +10,74 @@ RUN \
     && apt-get update \
     && apt-get install -yq \
         texlive-full \
+        openssh-server \
+        geany \
     && rm -rf /var/lib/apt/lists/* \
-    && mkdir -p /root/texmf/tex/latex/commonstuff/ 
+    && mkdir -p /root/texmf/tex/latex/commonstuff/  \
+    && service ssh start 
 
 # Install conda and conda extensions
+# Removed extensions:
+#                                 @jupyterlab/statusbar \
+#                                  jupyterlab_toastify \
+#            @lckr/jupyterlab_variableinspector \
+#            jupyterlab_filetree \ # does not work at 20190712
+#            jupyterlab_conda \
 RUN \
-    apt-get update && \
-    apt-get install -yq gcc nodejs && \
-    rm -rf /var/lib/apt/lists/* && \
-    conda update -y -n root conda && \
-    conda update -y --all &&\
-    conda install -y -c conda-forge \
+    apt-get update \
+    && apt-get install -yq \
+        gcc \
+        nodejs \
+        spyder3 \
+    && rm -rf /var/lib/apt/lists/*  \
+    && conda update -y -n root conda \
+    && conda update -y --all \
+    && conda install -y -c conda-forge \
                         jupyterlab \
                         ipympl \
                         nb_conda_kernels \
                         jupyter_conda \
-                        && \
-    conda install -y nodejs && \
-    pip install jupyterlab_latex black nbresuse && \
-    jupyter labextension install jupyterlab-drawio \
-                                 jupyter-matplotlib \
-                                 jupyterlab_bokeh  \
-                                 @jupyter-widgets/jupyterlab-manager \
-                                 @jupyterlab/latex \
-                                 @jupyterlab/statusbar \
-                                 @jupyterlab/toc \
-                                 @jupyterlab/celltags \
-                                 @ryantam626/jupyterlab_code_formatter \
-                                 jupyterlab_filetree \
-                                 jupyterlab-topbar-extension  \
-                                 jupyterlab-system-monitor  \
-                                 jupyterlab-topbar-text \
-                                 @lckr/jupyterlab_variableinspector \
-                                 jupyterlab_toastify \
-                                 @pyviz/jupyterlab_pyviz \
-                                 jupyterlab_conda && \
-    pip install jupyterlab_code_formatter && \
-    jupyter serverextension enable --py jupyterlab_code_formatter --system &&\
-    conda clean -y --all 
+    && conda install -y nodejs \
+    && pip install jupyterlab_latex black nbresuse \
+    && conda clean -y --all \
+    && jupyter labextension install \
+            jupyterlab-drawio \
+            @jupyter-widgets/jupyterlab-manager \
+            jupyter-matplotlib \
+            jupyterlab_bokeh  \
+            @pyviz/jupyterlab_pyviz \
+            @jupyterlab/toc \
+            @jupyterlab/latex \
+            @ryantam626/jupyterlab_code_formatter \
+    && jupyter labextension install \
+            jupyterlab_toastify \
+            @jupyterlab/celltags \
+            jupyterlab-topbar-extension  \
+            jupyterlab-system-monitor  \
+            jupyterlab-topbar-text \
+    && pip install jupyterlab_code_formatter \
+    && jupyter serverextension enable --py jupyterlab_code_formatter --system \
+    && conda clean -y --all 
 
-# Use conda environment
+# Use conda environment --override-channels conda-forge for first set, anaconda for second\
 SHELL ["/bin/bash", "-c"]
 RUN \
-    conda update -y -n root conda && \
-    conda update -y --all &&\
-    conda create -n droot && \
-    export PATH="/opt/conda/bin:$PATH" && \
-    source "/opt/conda/bin/activate" && \
-    conda activate droot && \
-    conda install -y -c conda-forge \
+    conda config --append channels conda-forge \
+    && conda config --append channels plotly \
+    && conda config --append channels pyviz \
+    && conda update -y -n root conda  \
+    && conda update -y --all \
+    && conda create -n droot  \
+    && export PATH="/opt/conda/bin:$PATH"  \
+    && source "/opt/conda/bin/activate"  \
+    && conda activate droot \
+    && conda install -y \
                         scipy \
                         matplotlib \
                         numpy \
                         pandas \
-                        scikit-learn \
-                        && \
-    conda install -y --override-channels \
-                     -c anaconda \
+                        scikit-learn  \
+    \
                         pyqtgraph \
                         xarray \
                         netcdf4 \
@@ -74,22 +85,22 @@ RUN \
                         bokeh \
                         networkx \
                         graphviz \
-                        && \
-    conda install -y \
-                    -c conda-forge \
+    \
                         jsonpickle \
                         h5netcdf \
                         h5py \
                         dask \
                         statsmodels \
-                        && \
-    conda install -y -c plotly plotly && \
-    conda install -c pyviz holoviews \
-    conda install -y ipykernel && \
-    jupyter lab build && \
-    conda update -y --all && \
-    conda clean -y --all && \
-    python -m ipykernel install --user --name droot \
+                        \
+                        plotly  \
+                        \
+                        holoviews \
+                        \
+                        ipykernel  \
+    && jupyter lab build  \
+    && conda update -y --all  \
+    && conda clean -y --all  \
+    && python -m ipykernel install --user --name droot \
                 --display-name "david_root"
 
 ARG USERID=1000
