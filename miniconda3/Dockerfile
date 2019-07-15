@@ -60,6 +60,8 @@ RUN \
     && conda clean -y --all 
 
 # Use conda environment --override-channels conda-forge for first set, anaconda for second\
+# there's a temporary bug where the latest version of jupyterlab has not propagated through
+# the network of dependicies.  Manually upgrading it.
 SHELL ["/bin/bash", "-c"]
 RUN \
     conda config --append channels conda-forge \
@@ -97,6 +99,7 @@ RUN \
                         holoviews \
                         \
                         ipykernel  \
+    && conda install -y -c conda-forge jupyterlab=1.0.2 \
     && jupyter lab build  \
     && conda update -y --all  \
     && conda clean -y --all  \
