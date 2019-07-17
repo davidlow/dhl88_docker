@@ -19,26 +19,39 @@ bash run.sh
 ```
 
 ### Customizing
-You will need to edit run.sh in your favorite text editor.
+You should **not** need to edit the `run.sh` file unless you
+want to run more than 1 miniconda docker at the same time.
+Then, you can change the `OFFSET` variable to something
+greater than 1, which will shift the name of the docker container
+and the port numberings.
 
-#### location of jupyter config files
-To ensure jupyter opens with the same GUI settings, select
-a location for the jupyterconfig files.
-```
--v /path/to/jupyter/config/file/directory:/jupyterconfigs \
-```
+If you are running this docker container for the first time in your
+computer, you need to create the files to correctly map your display
+to the container, desired volumes (folders) to the container, and
+various jupyter config folders to the container.  
 
-Add locations to save files
-```
--v /mnt/labshare:/labshare \
--v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
--v /home/david/cornell/nowack_lab/code:/code  \
-```
+Create a folder path inside `run_options/` that looks like 
+`run_options/${HOSTNAME}/${USER}`, or 
+`run_options/DebianDesktop/david` if the user is `david` and 
+the computer's name is `DebianDesktop`.  The current computer name 
+and user name can be found by `echo ${HOSTNAME}` and `echo ${USER}`
+respectively.  Inside of this new folder, create three files,
+`mount_opts`, `display_opts`, `jupyter_opts`.  There are templates
+in `run_options/templates/`.  
 
-Add where python can look for modules
-```
--e PYTHONPATH="/code:/labnotebook" \
-```
+`display_opts` can be left blank if you do not wish to connect 
+to your local x window or if you are running in something other
+than linux.
+
+`jupyter_opts` tells jupyter lab the folder in which to save its configuration
+files to maintain the same GUI appearence in the web browser from container
+to container.
+
+`mount_opts` allows you to access the hard drive of the local
+computer instead of just the temporary storage (destroyed whenever 
+the docker container closes) of in the docker container.
+You can also add a line to tell python where to look for import
+packages with: ` -e PYTHONPATH="/code:/labnotebook" `.
 
 ## First time running
 To make latex work properly, you need to add a certain
@@ -126,7 +139,9 @@ jupyter notebook kernels:
 ```
 python -m ipykernel install --user --name david --display-name "david"
 ```
-where david is the name of the virtualenv
+where david is the name of the virtualenv.  This is not strictly necessary
+as the kernel will still show up without it.
+and tends to make things more confusing.
 
 ### Environment files
 
@@ -204,8 +219,19 @@ and take the form:
 labworkspacesvibrations-0bdf.jupyterlab-workspace
 ```
 
-### nbextensions DOES NOT WORK WITH JUPYTERLAB
+### nbextensions DOES NOT WORK WITH JUPYgERLAB
 Nbextension manager can be accessed through 
 ```
 172.17.0.4:38888/nbextensions
+```
+
+### Jupyterlab 1.0
+Sometimes jupyterlab does not update properly to 1.0.
+Simply reinstall it with 
+```
+conda install -c conda-forge jupyterlab=1
+```
+If you need to re-build, do it from the command line as root with 
+```
+jupyter lab build
 ```
