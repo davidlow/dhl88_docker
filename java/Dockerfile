@@ -8,6 +8,7 @@ RUN \
         vim \
         openssh-server \
         wget \
+        geany \
     && rm -rf /var/lib/apt/lists/* 
 
 RUN \
