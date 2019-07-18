@@ -99,9 +99,9 @@ RUN \
                         holoviews \
                         \
                         ipykernel  \
-    && conda install -y -c conda-forge jupyterlab=1.0.2 \
-    && jupyter lab build  \
     && conda update -y --all  \
+    && conda install -y -c conda-forge jupyterlab=1 \
+    && jupyter lab build  \
     && conda clean -y --all  \
     && python -m ipykernel install --user --name droot \
                 --display-name "david_root"
