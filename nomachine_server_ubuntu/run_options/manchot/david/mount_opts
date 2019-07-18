@@ -1,0 +1,4 @@
+# mount points in format location on host <colon> location on docker
+-v /home/david/cornell/nowack_lab/labnotebook/docker/home:/home
+-v /home/david/cornell/nowack_lab/labnotebook:/labnotebook
+-v /home/david/library:/library

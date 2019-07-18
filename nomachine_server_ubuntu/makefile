@@ -1,7 +1,8 @@
 all: nomachine
 
 nomachine: Dockerfile 
-	docker build . -t dhl88/nomachine_server_ubuntu  \
+	docker build . -t dhl88/nomachine_server_ubuntu_${USER}  \
 					--build-arg USERNAME=${USER} \
 					--build-arg GID=$(shell id -g) \
-					--build-arg USERID=$(shell id -u) | less
+					--build-arg USERID=$(shell id -u) > build.log \
+					& less +F build.log
