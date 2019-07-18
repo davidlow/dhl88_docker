@@ -6,7 +6,7 @@ rdp.  It requires a nomachine client, which
 exists for all platforms.  In particular, there
 is a wonderful version for chrome os.
 
-![Network overview](./network.svg)
+[//]: # (![Network overview](./network.svg))
 <img src="./network.svg">
 
 ## Getting started
