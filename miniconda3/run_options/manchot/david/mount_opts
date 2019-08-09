@@ -4,4 +4,4 @@
 -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook 
 -v /home/david/cornell/nowack_lab/code:/code 
 -v /home/david/library:/library 
--e PYTHONPATH="/code:/labnotebook"
+-e PYTHONPATH=/code:/labnotebook
