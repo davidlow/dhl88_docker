@@ -1,6 +1,6 @@
 all: nomachine
 
-nomachine: Dockerfile 
+nomachine: Dockerfile nxserver.sh
 	docker build . -t dhl88/nomachine_server_ubuntu_${USER}  \
 					--build-arg USERNAME=${USER} \
 					--build-arg GID=$(shell id -g) \

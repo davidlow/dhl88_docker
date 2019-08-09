@@ -57,8 +57,11 @@ echo ""
 docker run \
     -it \
     --rm \
+    -d \
     --privileged \
     -p ${PORT}:${PORT}\
     ${MOUNT_OPTS} \
     --name ${THISDOCKERNAME} \
-    ${DOCKERNAME}
+    ${DOCKERNAME} \
+&& docker exec -it ${THISDOCKERNAME} /bin/bash -c "echo 'NXPort ${PORT}' >> /usr/NX/etc/server.cfg" \
+&& docker exec -it ${THISDOCKERNAME} /bin/bash
