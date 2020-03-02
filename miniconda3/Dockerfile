@@ -57,6 +57,7 @@ RUN \
             jupyterlab-topbar-text \
             @lckr/jupyterlab_variableinspector \
             jupyterlab-python-file \
+            @aquirdturtle/collapsible_headings \
     && pip install jupyterlab_code_formatter \
     && jupyter serverextension enable --py jupyterlab_code_formatter --system \
     && conda clean -y --all 
@@ -135,6 +136,7 @@ USER ${USERNAME}
 
 RUN \
     touch /home/${USERNAME}/.bashrc && \
+    echo "alias exit='echo no_exit_please!'" >> /home/${USERNAME}/.bashrc && \
     conda init bash 
 
 CMD ["bash"]

@@ -6,18 +6,17 @@
 # #   this docker container which you can find from the host by 
 # docker inspect anaconda0 | grep IP
 #
-# # All jupyter settings are stored in jupyterconfigs, which is on
-# # the host machine, so they are persistant
-#
+# # All jupyter settings are stored in jupyterconfigs, which is on # # the host machine, so they are persistant #
 # If you want to adjust the mount options, display options, etc, 
 # go to or make the directory structure run_options/${HOSTNAME}/${USER}/
 # and add your desired options. 
 
-OFFSET=0
+OFFSET=1
 DOCKERNAME=dhl88/miniconda_${USER}
 THISDOCKERNAME=miniconda_${USER}_${OFFSET}
 PORT=$((38888 + $(id -u) + ${OFFSET}))
 PORT_DASH=$((8787 + ${OFFSET}))
+PORT_VISDOM=$((8097 + ${OFFSET}))
 HOME=/home/${USER}
 
 # Get display, mount options for docker run
@@ -58,6 +57,7 @@ docker run \
     --privileged \
     -p $PORT:$PORT \
     -p ${PORT_DASH}:8787 \
+    -p ${PORT_VISDOM}:8097 \
     \
     ${MOUNT_OPTS} \
     ${DISPLAY_OPTS} \
@@ -67,6 +67,7 @@ docker run \
     \
     --name $THISDOCKERNAME \
     $DOCKERNAME \
+    \
 && docker cp ./sty/davidnotes.sty  \
 	$THISDOCKERNAME:$HOME/texmf/tex/latex/commonstuff/ \
 && docker cp ./sty/davidphys.sty   \
@@ -78,4 +79,5 @@ docker run \
     \
 && docker cp startjupyter $THISDOCKERNAME:/usr/bin/ \
     \
+&& docker cp embeddfonts $THISDOCKERNAME:/usr/bin/ \
 && docker exec -it $THISDOCKERNAME /bin/bash 
