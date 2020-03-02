@@ -15,8 +15,8 @@ OFFSET=1
 DOCKERNAME=dhl88/miniconda_${USER}
 THISDOCKERNAME=miniconda_${USER}_${OFFSET}
 PORT=$((38888 + $(id -u) + ${OFFSET}))
-PORT_DASH=$((8787 + ${OFFSET}))
-PORT_VISDOM=$((8097 + ${OFFSET}))
+PORT_DASH=$((8787 + $(id -u) + ${OFFSET}))
+PORT_VISDOM=$((8097 + $(id -u) + ${OFFSET}))
 HOME=/home/${USER}
 
 # Get display, mount options for docker run
