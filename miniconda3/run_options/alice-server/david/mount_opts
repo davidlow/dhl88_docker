@@ -1,0 +1,5 @@
+# Options for docker run for attaching volumes
+# Also, the python path that python will look at to find runable python scripts
+-v /home/david/cornell/:/cornell
+-v /home/david/library/:/library
+-e PYTHONPATH=/cornell:/library
