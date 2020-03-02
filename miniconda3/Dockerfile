@@ -39,7 +39,11 @@ RUN \
                         jupyter_conda \
     && conda install -y nodejs \
     && pip install jupyterlab_latex black nbresuse \
-    && conda clean -y --all \
+    && conda clean -y --all 
+
+RUN \
+    conda update -y -n root conda \
+    && conda update -y --all \
     && jupyter labextension install \
             jupyterlab-drawio \
             @jupyter-widgets/jupyterlab-manager \
@@ -51,7 +55,6 @@ RUN \
             @ryantam626/jupyterlab_code_formatter \
     && jupyter labextension install \
             jupyterlab_toastify \
-            @jupyterlab/celltags \
             jupyterlab-topbar-extension  \
             jupyterlab-system-monitor  \
             jupyterlab-topbar-text \
@@ -65,6 +68,7 @@ RUN \
 # Use conda environment --override-channels conda-forge for first set, anaconda for second\
 # there's a temporary bug where the latest version of jupyterlab has not propagated through
 # the network of dependicies.  Manually upgrading it.
+            #@jupyterlab/celltags \
 SHELL ["/bin/bash", "-c"]
 RUN \
     conda config --append channels conda-forge \
@@ -127,7 +131,7 @@ RUN \
     chown -R ${USERID}:${GID} /home/${USERNAME}/ && \
     mkdir -p /home/${USERNAME}/texmf/tex/latex/commonstuff && \
     mkdir -p /home/${USERNAME}/.config/matplotlib/stylelib && \
-    chown -R ${USERNAME}:${USERNAME} /opt/conda/share && \
+    chown -R ${USERNAME}:${GID} /opt/conda/share && \
     chmod 777 -R /opt/conda/share && \
     find /opt/conda -type d -exec chmod 777 {} + && \
     chown -R ${USERID}:${GID} /home/${USERNAME}/.config/

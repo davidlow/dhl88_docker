@@ -11,12 +11,12 @@
 # go to or make the directory structure run_options/${HOSTNAME}/${USER}/
 # and add your desired options. 
 
-OFFSET=1
+OFFSET=0
 DOCKERNAME=dhl88/miniconda_${USER}
 THISDOCKERNAME=miniconda_${USER}_${OFFSET}
 PORT=$((38888 + $(id -u) + ${OFFSET}))
-PORT_DASH=$((8787 + ${OFFSET}))
-PORT_VISDOM=$((8097 + ${OFFSET}))
+PORT_DASH=$((8787 + $(id -u) + ${OFFSET}))
+PORT_VISDOM=$((8097 + $(id -u) + ${OFFSET}))
 HOME=/home/${USER}
 
 # Get display, mount options for docker run
