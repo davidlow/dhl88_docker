@@ -108,6 +108,10 @@ RUN \
     && adduser ${USERNAME} sudo \
     && sed -i '/DisplayOwner/c\DisplayOwner '"${USERNAME}" $NX_SRV_CFG 
 
+RUN \
+    touch /home/${USERNAME}/.bashrc \
+    && echo "alias exit='echo no_exit_please!'" >> /home/${USERNAME}/.bashrc 
+
 ADD nxserver.sh /
 
 #ENTRYPOINT ["./nxserver.sh"]
