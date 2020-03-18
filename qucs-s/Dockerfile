@@ -17,4 +17,5 @@ RUN \
     && apt-get clean -yq \
     && rm -rf /var/lib/apt/lists/*
 
+ARG USERNAME=david
 USER ${USERNAME}

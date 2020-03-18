@@ -1,3 +1,5 @@
+# disable printing
+printing=no
 # enable HTML5 client
 html=on
 # disable webcam forwarding

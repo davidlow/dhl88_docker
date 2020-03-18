@@ -10,7 +10,7 @@ DOCKERNAME=dhl88/qucs_${USER}
 THISDOCKERNAME=qucs_${USER}_${OFFSET}
 PORT=$((14600 + $(id -u) + ${OFFSET}))
 HOME=/home/${USER}
-PASSWD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-48}`
+PASSWD=`< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-24}`
 
 # Get display, mount options for docker run
 # Folder structure so you can save them between different computers
@@ -30,11 +30,9 @@ GREEN_='\033[0;32m'
 echo -e "Starting ${GREEN_} ${THISDOCKERNAME} ${NC_} from ${RED_} ${HOSTNAME} ${NC_}"
 echo -e "Docker container name: ${GREEN_} ${THISDOCKERNAME} ${NC_}"
 echo -e "xpra Port: ${RED_} ${PORT} ${NC_} <- ${GREEN_} 14500 ${NC_}"
-echo -e "To start xpra, run the command ${GREEN_} startjupyter ${NC_} in docker commandline"
+echo -e "To start xpra, run the command ${GREEN_} xpra start --start=xterm ${NC_} in docker commandline"
 echo -e "To access html5 webpage with running xpra:"
-echo -e "    1. With web browser, go to ${GREEN_} <IP addr>:${PORT} ${NC_}"
-echo -e "    2. Use username=${RED_}${USER}${NC_}"
-echo -e "    3. Use password=${RED_}${PASSWD}${NC_}"
+echo -e "  With web browser, go to ${GREEN_} :https://<IP addr>:${PORT}/?username=${USER}&password=${PASSWD}&sharing=true${PORT} ${NC_}"
 echo -e "To get the password again, ${RED_} echo \$PASSWORD ${NC_}"
 echo ""
 
