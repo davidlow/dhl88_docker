@@ -3,11 +3,12 @@ docker run \
     -it  \
     --privileged \
     -e DISPLAY=$DISPLAY  \
-    -v /home/david/Downloads:/home/user/Downloads \
+    -v /home/david/Downloads:/Downloads \
     -v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0:ro  \
     -v /run/user/$(id -u)/pulse:/run/pulse:ro \
-    -v /home/david/library:/home/user/library \
-    -v /home/david/cornell/nowack_lab/labnotebook:/home/user/labnotebook \
+    -v /home/david/library:/library \
+    -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
+    --shm-size 2g \
     --name firefox-sid2 \
     dhl88/firefox-sid2
 
