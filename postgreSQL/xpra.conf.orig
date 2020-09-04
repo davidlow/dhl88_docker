@@ -1,0 +1,28 @@
+# disable printing
+printing=no
+# enable HTML5 client
+html=on
+# disable webcam forwarding
+webcam=no
+start-via-proxy=no
+systemd-run=no
+dbus-proxy=no
+dbus-control=no
+dbus-launch=no
+socket-dirs=/run/user/1000/xpra
+#disable MDNS
+mdns=no
+# disable notifications
+notifications=no
+# use SSL certificate
+ssl-cert=/etc/xpra/ssl-cert.pem
+# disable client certificate authentication
+ssl-client-verify-mode=none
+# use password authentication with password provided in environment variable XPRA_PW
+wss-auth=env:name=XPRA_PW
+# allow session sharing
+sharing=yes
+# prevent clients to start new commands
+start-new-commands=yes
+# set DPI to 96
+dpi=96
