@@ -1,0 +1,4 @@
+# Options that go into docker run for kicking back X correctly
+# These work at least on arch linux at 2019-07-17
+-e DISPLAY=$DISPLAY 
+-v /tmp/.X11-unix/X0:/tmp/.X11-unix/X0 
