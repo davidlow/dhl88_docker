@@ -101,9 +101,10 @@ RUN \
                         ipykernel  \
                         \
                         xeus-python\
+                        tqdm\
     && conda install -y -c pytorch pytorch torchvision torchaudio cpuonly \
     && conda update -y --all  \
-    && conda install -y -c conda-forge jupyterlab=1 \
+    && conda install -y -c conda-forge jupyterlab=3 \
     && jupyter lab build  \
     && conda clean -y --all  \
     && python -m ipykernel install --user --name droot \
