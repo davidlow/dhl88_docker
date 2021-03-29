@@ -26,8 +26,8 @@ RUN  \
         flash-mozilla.so /usr/lib/flashplugin-nonfree/libflashplayer.so \
         50 
 
-USER user
-WORKDIR /home/user
+USER david
+WORKDIR /home/david
 RUN \
 wget https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/addon-607454-latest.xpi 
 
