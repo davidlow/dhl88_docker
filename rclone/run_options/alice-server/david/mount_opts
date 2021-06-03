@@ -1,0 +1,8 @@
+# Options for docker run for attaching volumes
+# Also, the python path that python will look at to find runable python scripts
+-v /home/david/cornell/:/cornell
+-v /home/david/library/:/library
+-v /mnt/locallab/:/locallab
+-v /home/david/googledrive/:/googledrive
+-v /home/david/docker/private/sshkeys/rclone/:/home/david/.ssh
+-v /home/david/docker/private/rclone/config/:/home/david/.config

@@ -1,0 +1,6 @@
+# Options for docker run for attaching volumes
+# Also, the python path that python will look at to find runable python scripts
+-v /home/alice/data:/data
+-v /home/alice/googledrive/:/googledrive
+-v /home/alice/docker/private/sshkeys/rclone/:/home/alice/.ssh
+-v /home/alice/docker/private/rclone/config/:/home/alice/.config
