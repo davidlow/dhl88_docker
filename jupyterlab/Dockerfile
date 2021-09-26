@@ -43,6 +43,9 @@ RUN \
     #        jupyterlab-system-monitor  \
     #        jupyterlab-topbar-text \
     #        jupyterlab_bokeh  \
+    #             @pyviz/jupyterlab_pyviz \
+    #           @jupyterlab/hdf5 \
+    #           @ryantam626/jupyterlab_code_formatter \
 
 RUN \
     conda update -y -n root conda \
@@ -50,12 +53,9 @@ RUN \
     && jupyter labextension install \
             jupyterlab-drawio \
             @jupyter-widgets/jupyterlab-manager \
-            @pyviz/jupyterlab_pyviz \
     && jupyter labextension install \
             jupyterlab_toastify \
             @aquirdturtle/collapsible_headings \
-            @ryantam626/jupyterlab_code_formatter \
-            @jupyterlab/hdf5 \
     && pip install \ 
         lckr-jupyterlab-variableinspector \
         aquirdturtle_collapsible_headings \
@@ -82,14 +82,14 @@ RUN \
                         numpy \
                         pandas \
                         scikit-learn  \
-    \
+    && conda install -y \
                         xarray \
                         netcdf4 \
                         pillow \
                         bokeh \
                         networkx \
                         graphviz \
-    \
+    && conda install -y \
                         jsonpickle \
                         h5netcdf \
                         h5py \

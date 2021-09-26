@@ -11,7 +11,10 @@ docker run \
     -v /home/david/cornell/nowack_lab/labnotebook:/labnotebook \
     --shm-size 2g \
     --name firefox-sid2 \
-    dhl88/firefox-sid2:20210618
+    dhl88/firefox-sid2
+
+
+    #dhl88/firefox-sid2
 
 #    -v /dev/snd:/dev/snd \ # for alsa audio
 #    --device /dev/snd \

@@ -1,4 +1,4 @@
 # Options for docker run for Jupyter configs
 # where to put the jupyter config files
--v /home/david/cornell/nowack_lab/labnotebook/jupyter:/jupyterconfigs
+-v /home/david/cornell/nowack_lab/labnotebook/jupyter_3:/jupyterconfigs
 -e JUPYTER_CONFIG_DIR=/jupyterconfigs
