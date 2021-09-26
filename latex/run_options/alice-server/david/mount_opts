@@ -1,0 +1,3 @@
+-v /home/david/cornell/:/cornell
+-v /mnt/locallab/:/locallab
+-v /home/david/Downloads:/Downloads

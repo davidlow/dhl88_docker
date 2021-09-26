@@ -21,6 +21,7 @@ RUN \
         vim \
         pulseaudio \
 	    alsa-utils \
+        sudo \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /home/user \
     && chown ${uid}:${gid} -R /home/user \
